@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Políticas - G&D Style</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+<nav>
+    <div class="logo"><a href="index.html">G&D Style</a></div>
+    
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Tienda</a></li>
+        <li><a href="acerca.html">Acerca de</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="faq.html">Preguntas Frecuentes</a></li>
+        <li><a href="politicas.html">Políticas</a></li>
+    </ul>
+</nav>
+    </header>
+
+    <section class="hero-title">
+        <h1>POLÍTICAS</h1>
+    </section>
+
+    <div class="main-container" style="display: block; max-width: 800px;">
+        <h2 style="margin-bottom: 20px; font-family: 'Playfair Display';">Envíos y Entregas</h2>
+        <p style="margin-bottom: 20px;">Los pedidos se procesan en un lapso de 24 a 48 horas hábiles después de confirmado el pago. El número de guía será compartido vía WhatsApp.</p>
+        
+        <h2 style="margin-bottom: 20px; font-family: 'Playfair Display';">Cambios y Devoluciones</h2>
+        <p>Por razones de higiene, no se aceptan cambios ni devoluciones en productos de maquillaje o accesorios de uso personal, a menos que presenten un defecto de fábrica al momento de la entrega.</p>
+    </div>
+    <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>G&D Style</h4>
+            <p>Belleza y estilo a tu alcance.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Enlaces</h4>
+            <ul class="footer-links">
+                <li><a href="index.html">Tienda</a></li>
+                <li><a href="acerca.html">Acerca de</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                <li><a href="politicas.html">Políticas</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com/tu_pagina" target="_blank" class="icon-link fb">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/584121927683" target="_blank" class="icon-link wa">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2024 G&D Style - Todos los derechos reservados
+    </div>
+</footer>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h2>Tu Carrito</h2>
+                <button class="close-cart" id="closeCart">X</button>
+            </div>
+            <div class="cart-content">
+                <p>Tu carrito está vacío.</p>
+            </div>
+            <div class="cart-footer">
+                <h3>Total: Bs.S. 0,00</h3>
+                <button class="checkout-btn">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-floating-btn" id="openCartFloat">
+        🛒
+        <span class="cart-count">0</span>
+    </div>
+
+    <div class="chat-bubble" onclick="window.open('https://wa.me/584121927683', '_blank')"> <i class="fab fa-whatsapp"></i></div>
+
+<button id="backToTop" class="back-to-top">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
