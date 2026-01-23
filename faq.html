@@ -6,6 +6,7 @@
     <title>Preguntas Frecuentes - G&D Style</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/png" href="img/logo.jpeg">
 </head>
 <body>
     <header>
@@ -85,24 +86,36 @@
     </div>
 </footer>
 
+     <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <div class="zoom-controls">
+            <button id="zoomIn"><i class="fas fa-search-plus"></i></button>
+            <button id="zoomOut"><i class="fas fa-search-minus"></i></button>
+            <button id="rotateImg"><i class="fas fa-redo"></i></button>
+            <button id="zoomReset"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <div class="modal-wrapper" id="modalWrapper">
+            <img class="modal-content" id="imgFull" draggable="false">
+        </div>
+        <div id="caption"></div>
+    </div>
+
     <div class="cart-overlay" id="cartOverlay">
         <div class="cart-panel">
             <div class="cart-header">
                 <h2>Tu Carrito</h2>
-                <button class="close-cart" id="closeCart">X</button>
+                <button class="close-cart" id="closeCart">&times;</button>
             </div>
-            <div class="cart-content">
-                <p>Tu carrito está vacío.</p>
-            </div>
+            <div class="cart-content" id="cartItems"></div>
             <div class="cart-footer">
-                <h3>Total: Bs.S. 0,00</h3>
+                <h3>Total: <span id="cartTotal">$ 0,00</span></h3>
                 <button class="checkout-btn">Finalizar Compra</button>
             </div>
         </div>
     </div>
 
     <div class="cart-floating-btn" id="openCartFloat">
-        🛒
+        <i class="fas fa-shopping-cart"></i>
         <span class="cart-count">0</span>
     </div>
 
