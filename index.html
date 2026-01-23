@@ -3,36 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G&D Style - Tienda</title>
+    <title>G&D Style - Tienda Oficial</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <head>
+    <link rel="icon" type="image/png" href="img/logo.jpeg">
+    </head>
 </head>
 <body>
-    <header>
-<nav>
-    <div class="logo"><a href="index.html">G&D Style</a></div>
-    
-    <button class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-    </button>
 
-    <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Tienda</a></li>
-        <li><a href="acerca.html">Acerca de</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-        <li><a href="faq.html">Preguntas Frecuentes</a></li>
-        <li><a href="politicas.html">Políticas</a></li>
-    </ul>
-</nav>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">G&D Style</a></div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Tienda</a></li>
+                <li><a href="acerca.html">Acerca de</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                <li><a href="politicas.html">Políticas</a></li>
+            </ul>
+        </nav>
     </header>
 
     <section class="hero-title">
         <h1>PRODUCTOS</h1>
     </section>
 
+    <button class="filter-mobile-btn" id="openFilters">
+        <i class="fas fa-filter"></i> Filtrar Productos
+    </button>
+
     <div class="main-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
+            <button class="close-sidebar" id="closeFilters">&times;</button>
+
             <div class="search-container">
                 <input type="text" id="productSearch" placeholder="Buscar producto...">
                 <i class="fas fa-search"></i>
@@ -41,20 +51,17 @@
             <h2>Filtrar por</h2>
             
             <div class="filter-group">
-                <div class="price-header">
-                    <span>Precio Máximo</span>
-                    <span>−</span>
-                </div>
-                <input type="range" class="price-slider" id="priceRange" min="15" max="45" value="45">
+                <div class="price-header"><span>Precio</span></div>
+                <input type="range" class="price-slider" id="priceRange" min="0" max="30" value="30">
                 <div class="price-labels">
-                    <span>15 $</span>
-                    <span id="currentMaxLabel">45 $</span>
+                    <span>$ 0</span>
+                    <span id="currentMaxLabel">$ 30</span>
                 </div>
             </div>
 
             <div class="filter-group">
                 <div class="filter-label" onclick="toggleFilter('aroma-opts')">Aroma <span>+</span></div>
-                <ul id="aroma-opts" class="filter-options" style="display: none; list-style: none; padding: 10px 0;">
+                <ul id="aroma-opts" class="filter-options" style="display: none; list-style: none;">
                     <li><label><input type="checkbox" class="filter-check" value="dulce"> Dulce</label></li>
                     <li><label><input type="checkbox" class="filter-check" value="floral"> Floral</label></li>
                     <li><label><input type="checkbox" class="filter-check" value="neutro"> Neutro</label></li>
@@ -63,50 +70,51 @@
 
             <div class="filter-group">
                 <div class="filter-label" onclick="toggleFilter('color-opts')">Color <span>+</span></div>
-                <ul id="color-opts" class="filter-options" style="display: none; list-style: none; padding: 10px 0;">
+                <ul id="color-opts" class="filter-options" style="display: none; list-style: none;">
                     <li><label><input type="checkbox" class="filter-check" value="negro"> Negro</label></li>
                     <li><label><input type="checkbox" class="filter-check" value="rosado"> Rosado</label></li>
                     <li><label><input type="checkbox" class="filter-check" value="madera"> Madera</label></li>
                 </ul>
             </div>
-
-            <div class="filter-group">
-                <div class="filter-label" onclick="toggleFilter('piel-opts')">Tipo de Piel <span>+</span></div>
-                <ul id="piel-opts" class="filter-options" style="display: none; list-style: none; padding: 10px 0;">
-                    <li><label><input type="checkbox" class="filter-check" value="seca"> Seca</label></li>
-                    <li><label><input type="checkbox" class="filter-check" value="grasa"> Grasa</label></li>
-                    <li><label><input type="checkbox" class="filter-check" value="todas"> Todas</label></li>
-                </ul>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                <button onclick="devReset()" style="background:#eee; border:none; padding:8px; font-size:10px; cursor:pointer; border-radius:4px;">
+                    <i class="fas fa-trash"></i> Reset Sistema
+                </button>
             </div>
         </aside>
 
-        <section class="products-grid">
-            <div class="product-card" data-color="negro" data-aroma="neutro" data-piel="todas">
-                <a href="producto.html" style="text-decoration: none; color: inherit;">
-                    <div class="img-box img-estuche"></div>
-                    <h4>ESTUCHE MAQUILLAJE PORTÁTIL</h4>
-                </a>
-                <p class="price">Bs.S. 22,00</p>
+        <section class="products-grid" id="productsGrid">
+            
+            <div class="product-card" data-color="negro" data-aroma="neutro">
+                <div class="img-container">
+                    <a href="producto.html"><div class="img-box img-estuche"></div></a>
+                </div>
+                <h4>ESTUCHE MAQUILLAJE PORTÁTIL</h4>
+                <p class="price">$ 22,00</p>
                 <button class="add-btn">Agregar al carrito</button>
             </div>
 
-            <div class="product-card" data-color="rosado" data-aroma="neutro" data-piel="seca">
-                <a href="esponja.html" style="text-decoration: none; color: inherit;">
-                    <div class="img-box img-esponja"></div>
-                    <h4>ESPONJA MAQUILLAJE</h4>
-                </a>
-                <p class="price">Bs.S. 15,00</p>
+            <div class="product-card" data-color="rosado" data-aroma="neutro">
+                <div class="img-container">
+                    <span class="badge new">Nuevo</span>
+                    <a href="esponja.html"><div class="img-box img-esponja"></div></a>
+                </div>
+                <h4>ESPONJA MAQUILLAJE</h4>
+                <p class="price">$ 15,00</p>
                 <button class="add-btn">Agregar al carrito</button>
             </div>
 
-            <div class="product-card" data-color="madera" data-aroma="neutro" data-piel="todas">
-                <a href="brocha.html" style="text-decoration: none; color: inherit;">
-                    <div class="img-box img-brocha"></div>
-                    <h4>BROCHA MAQUILLAJE POLVO</h4>
-                </a>
-                <p class="price">Bs.S. 18,00</p>
-                <button class="add-btn">Agregar al carrito</button>
+            <div class="product-card" data-color="madera" data-aroma="neutro">
+                <div class="img-container">
+                    <span class="badge out-of-stock">Agotado</span>
+                    <a href="brocha.html"><div class="img-box img-brocha"></div></a>
+                </div>
+                <h4>BROCHA MAQUILLAJE POLVO</h4>
+                <p class="price">$ 6,00</p>
+                <button class="add-btn" disabled>Sin Stock</button>
             </div>
+
         </section>
     </div>
 
@@ -116,64 +124,41 @@
                 <h2>Tu Carrito</h2>
                 <button class="close-cart" id="closeCart">&times;</button>
             </div>
-            <div class="cart-content"></div>
+            <div class="cart-content" id="cartItems"></div>
             <div class="cart-footer">
-                <h3>Total: <span id="cartTotal">Bs.S. 0,00</span></h3>
+                <h3>Total: <span id="cartTotal">$ 0,00</span></h3>
                 <button class="checkout-btn">Finalizar Compra</button>
             </div>
         </div>
     </div>
 
-      <footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>G&D Style</h4>
-            <p>Belleza y estilo a tu alcance.</p>
-        </div>
-
-        <div class="footer-section">
-            <h4>Enlaces</h4>
-            <ul class="footer-links">
-                <li><a href="index.html">Tienda</a></li>
-                <li><a href="acerca.html">Acerca de</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="faq.html">Preguntas Frecuentes</a></li>
-                <li><a href="politicas.html">Políticas</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h4>Síguenos</h4>
-            <div class="social-icons">
-                <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://facebook.com/tu_pagina" target="_blank" class="icon-link fb">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://wa.me/584121927683" target="_blank" class="icon-link wa">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>G&D Style</h4>
+                <p>Belleza y estilo a tu alcance. Calidad garantizada en cada accesorio.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/584121927683" target="_blank" class="icon-link wa"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="footer-bottom">
-        &copy; 2024 G&D Style - Todos los derechos reservados
-    </div>
-</footer>
+        <div class="footer-bottom">&copy; 2026 G&D Style - Todos los derechos reservados</div>
+    </footer>
 
     <div class="cart-floating-btn" id="openCartFloat">
-        🛒 <span class="cart-count">0</span>
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
     </div>
 
     <div class="chat-bubble" onclick="window.open('https://wa.me/584121927683', '_blank')">
         <i class="fab fa-whatsapp"></i>
     </div>
 
-
-<button id="backToTop" class="back-to-top">
-    <i class="fas fa-chevron-up"></i>
-</button>
+    <button id="backToTop" class="back-to-top"><i class="fas fa-chevron-up"></i></button>
 
     <script src="script.js"></script>
 </body>
