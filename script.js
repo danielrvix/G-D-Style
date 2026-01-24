@@ -328,6 +328,36 @@ document.addEventListener('keydown', (e) => {
 
 // Inicialización
 actualizarCarritoUI();
+
+let deferredPrompt;
+const installBanner = document.getElementById('install-banner');
+const installButton = document.getElementById('install-button');
+const closeBanner = document.getElementById('close-banner');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Evita que el navegador muestre su propio aviso por defecto
+    e.preventDefault();
+    deferredPrompt = e;
+    // Muestra nuestro banner personalizado
+    installBanner.style.display = 'flex';
+});
+
+installButton.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            console.log('El usuario instaló la app');
+        }
+        deferredPrompt = null;
+        installBanner.style.display = 'none';
+    }
+});
+
+closeBanner.addEventListener('click', () => {
+    installBanner.style.display = 'none';
+});
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
