@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G&D Style - Tienda Oficial</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <head>
+    <link rel="icon" type="image/png" href="img/logo.jpeg">
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f8b4b4">
+    </head>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">G&D Style</a></div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Tienda</a></li>
+                <li><a href="acerca.html">Acerca de</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                <li><a href="politicas.html">Políticas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-title">
+        <h1>PRODUCTOS</h1>
+    </section>
+
+    <button class="filter-mobile-btn" id="openFilters">
+        <i class="fas fa-filter"></i> Filtrar Productos
+    </button>
+
+    <div class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <button class="close-sidebar" id="closeFilters">&times;</button>
+
+            <div class="search-container">
+                <input type="text" id="productSearch" placeholder="Buscar producto...">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <h2>Filtrar por</h2>
+            
+            <div class="filter-group">
+                <div class="price-header"><span>Precio</span></div>
+                <input type="range" class="price-slider" id="priceRange" min="0" max="30" value="30">
+                <div class="price-labels">
+                    <span>$ 0</span>
+                    <span id="currentMaxLabel">$ 30</span>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleFilter('aroma-opts')">Buscar <span>+</span></div>
+                <ul id="aroma-opts" class="filter-options" style="display: none; list-style: none;">
+                    <li><label><input type="checkbox" class="filter-check" value="labiales"> Labiales</label></li>
+                    <li><label><input type="checkbox" class="filter-check" value="mascarillas"> Mascarillas</label></li>
+                    <li><label><input type="checkbox" class="filter-check" value="cremas"> Cremas</label></li>
+
+                </ul>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleFilter('color-opts')">Color <span>+</span></div>
+                <ul id="color-opts" class="filter-options" style="display: none; list-style: none;">
+                </ul>
+            </div>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                <button onclick="devReset()" style="background:#eee; border:none; padding:8px; font-size:10px; cursor:pointer; border-radius:4px;">
+                    <i class="fas fa-trash"></i> Reset Sistema
+                </button>
+            </div>
+        </aside>
+
+        <section class="products-grid" id="productsGrid">
+
+
+            <div class="product-card" data-color="" data-aroma="cremas">
+                <div class="img-container">
+                <span class="badge new">Nuevo</span>
+                    <a href="Jabonesfacialessadoer.html"><div class="img-box img-jabonfacial1"></div></a>
+                </div>
+                <h4>Jabon SADOER Professional</h4>
+                <p class="price">$ 7</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+            
+            <div class="product-card" data-color="negro" data-aroma="mascarillas">
+                <div class="img-container">
+                 <span class="badge new">Nuevo</span>
+                    <a href="mascarilla.html"><div class="img-box img-mascarilla"></div></a>
+                </div>
+                <h4>Mascarilla</h4>
+                <p class="price">$ 1,50</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+
+            <div class="product-card" data-color="rosado" data-aroma="mascarillas">
+                <div class="img-container">
+                    <span class="badge new">Nuevo</span>
+                    <a href="mascarillaspuntosnegros.html"><div class="img-box img-mascarillaspuntosnegros"></div></a>
+                </div>
+                <h4>Mascarilla Puntos Negros</h4>
+                <p class="price">$ 0,70</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+
+            <div class="product-card" data-color="madera" data-aroma="mascarillas">
+                <div class="img-container">
+                    <span class="badge new">Nuevo</span>
+                    <a href="mascarrillalabios.html"><div class="img-box img-mascarrillalabios"></div></a>
+                </div>
+                <h4>Mascarillas Bioaua Para Labios </h4>
+                <p class="price">$ 1,00</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+
+            <div class="product-card" data-color="madera" data-aroma="mascarillas">
+                <div class="img-container">
+                    <span class="badge new">Nuevo</span>
+                    <a href="mascarillasojeras.html"><div class="img-box img-mascarrillaojeras"></div></a>
+                </div>
+                <h4>Mascarillas Bioaua Ojeras</h4>
+                <p class="price">$ 1,00</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+
+            <div class="product-card" data-color="madera" data-aroma="labiales">
+                <div class="img-container">
+                    <span class="badge new">Nuevo</span>
+                    <a href="labiales.html"><div class="img-box img-labialestipolapiz"></div></a>
+                </div>
+                <h4>Labial Mágico Hidratante</h4>
+                <p class="price">$ 1,50</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+
+            <div class="product-card" data-color="madera" data-aroma="cremas">
+                <div class="img-container">
+                    <span class="badge new">Nuevo</span>
+                    <a href="contornodeojos.html"><div class="img-box img-contornodeojos"></div></a>
+                </div>
+                <h4>Contorno de Ojos Saoder</h4>
+                <p class="price">$ 4,00</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+
+                <div class="product-card" data-color="madera" data-aroma="cremas">
+                <div class="img-container">
+                    <span class="badge new">Nuevo</span>
+                    <a href="protectorsolar.html"><div class="img-box img-protectorsolar"></div></a>
+                </div>
+                <h4>Serum Facial Protector Solar</h4>
+                <p class="price">$ 7,00</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+
+                <div class="product-card" data-color="madera" data-aroma="cremas">
+                <div class="img-container">
+                    <span class="badge new">Nuevo</span>
+                    <a href="serumdeacidohialuronico.html"><div class="img-box img-Serumdeacidohialurónico"></div></a>
+                </div>
+                <h4>Serum de Ácido Hialurónico</h4>
+                <p class="price">$ 6,00</p>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+        </section>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h2>Tu Carrito</h2>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-content" id="cartItems"></div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cartTotal">$ 0,00</span></h3>
+                <button class="checkout-btn">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>G&D Style</h4>
+                <p>Belleza y estilo a tu alcance. Calidad garantizada en cada accesorio.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/584121927683" target="_blank" class="icon-link wa"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 G&D Style - Todos los derechos reservados</div>
+    </footer>
+
+    <div class="cart-floating-btn" id="openCartFloat">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <div class="chat-bubble" onclick="window.open('https://wa.me/584121927683', '_blank')">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <button id="backToTop" class="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+    <script src="script.js"></script>
+</body>
+</html>

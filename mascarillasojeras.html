@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascarillas Bioaua Para Ojeras - G&D Style</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/logo.jpeg">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">G&D Style</a></div>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Tienda</a></li>
+                <li><a href="acerca.html">Acerca de</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                <li><a href="politicas.html">Políticas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="product-detail-container">
+        <div class="product-gallery">
+            <div class="img-box-detail img-mascarrillaojeras" id="mainImage"></div>
+            <div class="thumbnail-row">
+                <div class="thumb img-mascarrillaojeras active-thumb" onclick="cambiarFoto(this)"></div>
+                <div class="thumb" style="background-image: url('img/.jpeg')" onclick="cambiarFoto(this)"></div>
+                <div class="thumb" style="background-image: url('img/.webp')" onclick="cambiarFoto(this)"></div>
+            </div>
+        </div>
+
+        <div class="product-info-aside">
+            <nav class="breadcrumb">Tienda / Productos / Cuidado Personal</nav>
+            <h1>Mascarillas Bioaua Para Ojeras </h1>
+            <p class="sku">SKU: 00004</p>
+            <p class="price-detail">$ 1.00</p>
+            
+            <div class="purchase-options">
+                <div class="qty-selector" style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">Cantidad</label>
+                    <input type="number" value="1" min="1" class="qty-input">
+                </div>
+                <button class="add-btn">Agregar al carrito</button>
+            </div>
+
+<h1 style="color: #333; font-size: 1.8rem; margin-bottom: 5px;">Parches de Colágeno para Ojeras Bioaqua</h1>
+<div class="product-description" style="margin-top: 30px;">
+    <h3 style="color: #333; margin-bottom: 10px;">Información del Producto</h3>
+    <p style="color: #444; line-height: 1.6;">
+        Revitaliza tu mirada con los parches de hidrogel de **Bioaqua**. Diseñados específicamente para la delicada zona del contorno de ojos, estos parches están infundidos con colágeno y extractos descongestionantes que ayudan a reducir visiblemente las ojeras, desinflamar las bolsas y suavizar las líneas de expresión por cansancio.
+    </p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+        <ul style="color: #666; font-size: 0.9rem; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">👁️ **Desinflama:** Reduce bolsas y signos de fatiga.</li>
+            <li style="margin-bottom: 8px;">🌑 **Aclara:** Ayuda a atenuar el tono oscuro de las ojeras.</li>
+            <li style="margin-bottom: 8px;">💧 **Hidratación:** Rellena finas líneas de expresión.</li>
+        </ul>
+        <ul style="color: #666; font-size: 0.9rem; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">❄️ **Efecto Frío:** Calma y refresca instantáneamente.</li>
+            <li style="margin-bottom: 8px;">🧬 **Colágeno:** Aporta firmeza al contorno de ojos.</li>
+            <li style="margin-bottom: 8px;">⏳ **Rápido:** Resultados visibles en solo 20 minutos.</li>
+        </ul>
+    </div>
+
+    <div style="background: rgba(248, 180, 180, 0.1); padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <h4 style="color: #d88; font-size: 0.9rem; margin-bottom: 5px;">💡 Tip GyD Style para una Mirada Radiante:</h4>
+        <p style="color: #777; font-size: 0.85rem; margin: 0;">
+            Guarda tus parches en la nevera para potenciar el efecto vasoconstrictor. El frío ayudará a drenar los líquidos acumulados debajo de los ojos mucho más rápido, logrando una mirada descansada y brillante.
+        </p>
+    </div>
+</div>
+        </div>
+    </main>
+
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <div class="zoom-controls">
+            <button id="zoomIn"><i class="fas fa-search-plus"></i></button>
+            <button id="zoomOut"><i class="fas fa-search-minus"></i></button>
+            <button id="rotateImg"><i class="fas fa-redo"></i></button>
+            <button id="zoomReset"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <div class="modal-wrapper" id="modalWrapper">
+            <img class="modal-content" id="imgFull" draggable="false">
+        </div>
+        <div id="caption"></div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h2>Tu Carrito</h2>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-content" id="cartItems"></div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cartTotal">$ 0,00</span></h3>
+                <button class="checkout-btn">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-floating-btn" id="openCartFloat">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <div class="chat-bubble" onclick="window.open('https://wa.me/584121927683', '_blank')"> 
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <button id="backToTop" class="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>G&D Style</h4>
+                <p>Belleza y estilo a tu alcance.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces</h4>
+                <ul class="footer-links" style="list-style: none;">
+                    <li><a href="index.html">Tienda</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/584121927683" target="_blank" class="icon-link"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 G&D Style - Todos los derechos reservados</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
