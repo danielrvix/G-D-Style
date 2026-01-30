@@ -169,9 +169,18 @@ function actualizarCarritoUI() {
         setTimeout(() => cartCountElement.classList.remove('bump'), 300);
     }
 
-    if (carrito.length === 0) {
-        cartContent.innerHTML = '<p style="text-align:center; padding:20px; color:#999;">Tu carrito está vacío</p>';
-    } else {
+if (carrito.length === 0) {
+    cartContent.innerHTML = `
+        <div style="text-align:center; padding:40px 20px;">
+            <i class="fas fa-shopping-basket" style="font-size:3rem; color:#eee; margin-bottom:15px; display:block;"></i>
+            <p style="color:#999; margin-bottom:20px;">Tu carrito está vacío. ¡Hay muchas cosas lindas esperándote!</p>
+            <button onclick="irATienda()" style="background:#f8b4b4; color:#343a40; border:none; padding:12px 25px; border-radius:5px; cursor:pointer; font-weight:bold; text-transform:uppercase; font-size:0.8rem; transition:0.3s;">
+                Ir a la tienda
+            </button>
+        </div>
+    `;
+}
+ else {
         carrito.forEach((item, i) => {
             const p = parseFloat(item.precio) || 0;
             const sub = p * item.cantidad;
@@ -188,6 +197,10 @@ function actualizarCarritoUI() {
     }
     if (totalElement) totalElement.innerText = formatUSD(total);
 }
+window.irATienda = () => {
+    if (typeof cerrarCarrito === 'function') cerrarCarrito(); 
+    window.location.href = 'index.html'; 
+};
 
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('.add-btn, .add-btn-large');
