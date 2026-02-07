@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel G&D Style - Publicar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --rosa: #f8b4b4; --oscuro: #2c3136; }
+        body { font-family: 'Roboto', sans-serif; background: #f0f2f5; padding: 20px; margin: 0; }
+        .admin-card { background: white; max-width: 600px; margin: auto; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: var(--oscuro); border-bottom: 2px solid var(--rosa); padding-bottom: 10px; }
+        .campo { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        textarea { height: 150px; resize: vertical; } /* Más espacio para la descripción larga */
+        .btn-post { width: 100%; background: var(--rosa); color: var(--oscuro); border: none; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px; }
+        .preview-img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; display: none; margin-top: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+<div class="admin-card">
+    <h2><i class="fas fa-plus-circle"></i> Nueva Publicación</h2>
+    <form id="formPublicar">
+        <div class="campo">
+            <label>Nombre del Producto</label>
+            <input type="text" id="nombre" placeholder="Ej: JABON SADOER PROFESSIONAL" required>
+        </div>
+
+        <div class="campo">
+            <label>Descripción detallada (puedes usar emojis 💧✨)</label>
+            <textarea id="descripcion" placeholder="Copia aquí toda la información del producto, beneficios, marcas (Bioaqua, Mooyam), etc." required></textarea>
+        </div>
+
+        <div class="campo">
+            <label>Precio (solo números)</label>
+            <input type="number" step="0.01" id="precio" placeholder="Ej: 7.00" required>
+        </div>
+
+        <div class="campo">
+            <label>Categoría</label>
+            <select id="categoria">
+                <option value="cremas">Cremas / Jabones</option>
+                <option value="mascarillas">Mascarillas</option>
+                <option value="labiales">Labiales</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Foto del Producto</label>
+            <input type="file" id="foto" accept="image/*" required>
+            <img id="vistaPrevia" class="preview-img">
+        </div>
+
+        <button type="submit" class="btn-post">
+            <i class="fas fa-paper-plane"></i> Publicar en la Tienda
+        </button>
+    </form>
+    <p style="text-align: center;"><a href="index.html" style="color: #888; text-decoration: none; font-size: 0.9rem;">← Volver a la Tienda</a></p>
+</div>
+
+<script>
+    const inputFoto = document.getElementById('foto');
+    const vistaPrevia = document.getElementById('vistaPrevia');
+
+    // Ver la imagen antes de subirla
+    inputFoto.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                vistaPrevia.src = e.target.result;
+                vistaPrevia.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Guardar y Publicar
+    document.getElementById('formPublicar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const file = inputFoto.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = function() {
+            const nuevoPost = {
+                id: Date.now(),
+                nombre: document.getElementById('nombre').value.toUpperCase(),
+                desc: document.getElementById('descripcion').value, // Aquí se guarda todo el texto largo
+                precio: document.getElementById('precio').value,
+                img: reader.result,
+                cat: document.getElementById('categoria').value
+            };
+
+            // Guardar en la base de datos local
+            const db = JSON.parse(localStorage.getItem('gyd_posts_admin')) || [];
+            db.unshift(nuevoPost);
+            localStorage.setItem('gyd_posts_admin', JSON.stringify(db));
+
+            alert("¡Publicación realizada con éxito!");
+            window.location.href = "index.html";
+        };
+
+        reader.readAsDataURL(file);
+    });
+</script>
+
+</body>
+</html>

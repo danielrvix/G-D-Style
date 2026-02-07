@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto - G&D Style</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/logo.jpeg">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">G&D Style</a></div>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Tienda</a></li>
+                <li><a href="acerca.html">Acerca de</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                <li><a href="politicas.html">Políticas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="product-detail-container" id="product-root">
+        <div style="text-align: center; padding: 100px;">
+            <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: #f8b4b4;"></i>
+            <p>Cargando detalles...</p>
+        </div>
+    </main>
+
+    <div id="imageModal" class="image-modal" onclick="cerrarZoom()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="imgFull">
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h2>Tu Carrito</h2>
+                <button class="close-cart" id="closeCart" onclick="cerrarCarrito()">&times;</button>
+            </div>
+            <div class="cart-content" id="cartItems"></div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cartTotal">$ 0.00</span></h3>
+                <button class="checkout-btn">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-floating-btn" id="openCartFloat">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>G&D Style</h4>
+                <p>Belleza y estilo a tu alcance.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces</h4>
+                <ul class="footer-links" style="list-style: none; padding:0;">
+                    <li><a href="index.html">Tienda</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/584121927683" target="_blank" class="icon-link"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 G&D Style - Todos los derechos reservados</div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get('id');
+            const productos = JSON.parse(localStorage.getItem('gyd_posts_admin')) || [];
+            const p = productos.find(item => String(item.id) === String(productId));
+
+            if (p) {
+                const descripcionFormateada = p.desc.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                const precioFinal = parseFloat(p.precio) || 0;
+
+                document.getElementById('product-root').innerHTML = `
+                    <div class="product-gallery">
+                        <div class="img-box-detail" id="mainImage" onclick="abrirZoom('${p.img}')" style="
+                            background-image: url('${p.img}');
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            background-color: #fff;
+                            border: 1px solid #eee;
+                            height: 450px;
+                            border-radius: 8px;
+                            cursor: zoom-in;">
+                        </div>
+                    </div>
+
+                    <div class="product-info-aside">
+                        <nav class="breadcrumb">Tienda / Productos / ${p.aroma || 'Belleza'}</nav>
+                        <h1 style="margin: 10px 0; font-family: 'Playfair Display', serif; font-size: 2.2rem;">${p.nombre}</h1>
+                        <p class="sku" style="color: #999; font-size: 0.8rem; margin-bottom: 15px;">REF: GD-${p.id}</p>
+                        <p class="price-detail" style="font-size: 2.5rem; font-weight: bold; color: #2c3136; margin-bottom: 25px;">
+                            $ ${precioFinal.toFixed(2).replace('.', ',')}
+                        </p>
+                        <div class="purchase-options" style="background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #f0f0f0;">
+                            <div class="qty-selector" style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; color: #555;">Cantidad:</label>
+                                <input type="number" value="1" min="1" id="p-qty" style="padding: 12px; width: 80px; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem; text-align: center;">
+                            </div>
+                            <button class="add-btn" id="btnAgregar" style="width: 100%; padding: 15px; font-size: 1.1rem; letter-spacing: 1px;" 
+                                onclick="alCarrito('${p.id}', '${p.nombre}', ${precioFinal}, '${p.img}')">
+                                <i class="fas fa-shopping-cart"></i> AGREGAR AL CARRITO
+                            </button>
+                        </div>
+                        <div class="product-description" style="margin-top: 40px; border-top: 2px solid #f8b4b4; padding-top: 25px;">
+                            <h3 style="margin-bottom: 15px; color: #2c3136; text-transform: uppercase; font-size: 1rem;">Descripción</h3>
+                            <div class="content" style="white-space: pre-wrap; line-height: 1.8; color: #555; font-size: 1.05rem;">${descripcionFormateada}</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                document.getElementById('product-root').innerHTML = `<div style="text-align:center; padding: 100px;"><h2>Producto no encontrado</h2><a href="index.html">Volver a la tienda</a></div>`;
+            }
+        });
+
+        // FUNCIONES DE ZOOM
+        function abrirZoom(src) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('imgFull');
+            img.src = src;
+            modal.style.display = "flex";
+            document.body.style.overflow = "hidden"; // Bloquea scroll
+        }
+
+        function cerrarZoom() {
+            document.getElementById('imageModal').style.display = "none";
+            document.body.style.overflow = "auto"; // Libera scroll
+        }
+
+        // LÓGICA DE CARRITO
+        function alCarrito(id, nombre, precio, img) {
+            const idBusqueda = String(id); 
+            const qty = parseInt(document.getElementById('p-qty').value) || 1;
+            const btn = document.getElementById('btnAgregar');
+            
+            let carrito = JSON.parse(localStorage.getItem('carrito_gyd')) || [];
+            const index = carrito.findIndex(i => String(i.id) === idBusqueda);
+            
+            if (index !== -1) {
+                carrito[index].cantidad += qty;
+            } else {
+                carrito.push({ id: idBusqueda, nombre, precio: parseFloat(precio), img, cantidad: qty });
+            }
+            
+            localStorage.setItem('carrito_gyd', JSON.stringify(carrito));
+            
+            if (btn) {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> ¡AÑADIDO!';
+                btn.style.backgroundColor = "#4CAF50";
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.backgroundColor = "";
+                    // Sincronizar y abrir carrito
+                    if (typeof window.actualizarInterfazCarrito === 'function') window.actualizarInterfazCarrito();
+                    if (typeof window.abrirCarrito === 'function') window.abrirCarrito();
+                }, 800);
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
