@@ -2,15 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Detalles del Producto - G&D Style</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="img/logo.jpeg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
     <header>
@@ -49,7 +46,7 @@
             <div class="cart-content" id="cartItems"></div>
             <div class="cart-footer">
                 <h3>Total: <span id="cartTotal">$ 0.00</span></h3>
-<button class="checkout-btn" onclick="window.finalizarCompra()">Finalizar Compra</button>            </div>
+                <button class="checkout-btn" onclick="window.finalizarCompra()">Finalizar Compra</button>
             </div>
         </div>
     </div>
@@ -83,132 +80,128 @@
         <div class="footer-bottom">&copy; 2026 G&D Style - Todos los derechos reservados</div>
     </footer>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        cargarDetallesProducto();
-    });
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarDetallesProducto();
+        });
 
-    function cargarDetallesProducto() {
-        const DB = 'gyd_posts_admin'; 
-        const params = new URLSearchParams(window.location.search);
-        const productId = params.get('id');
-        const productos = JSON.parse(localStorage.getItem(DB)) || [];
-        const p = productos.find(item => String(item.id) === String(productId));
+        function cargarDetallesProducto() {
+            const DB = 'gyd_posts_admin'; 
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get('id');
+            const productos = JSON.parse(localStorage.getItem(DB)) || [];
+            const p = productos.find(item => String(item.id) === String(productId));
 
-        const root = document.getElementById('product-root');
-        if (!root) return;
+            const root = document.getElementById('product-root');
+            if (!root) return;
 
-        if (p) {
-            const descripcionFormateada = p.desc.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            const precioActual = parseFloat(p.precio) || 0;
-            const precioViejo = parseFloat(p.precioOferta) || 0;
+            // Limpieza absoluta para evitar duplicados o iconos viejos
+            root.innerHTML = "";
 
-            // Renderizado usando tus clases de style.css
-            root.innerHTML = `
-                <div class="product-gallery">
-                    <div class="img-box-detail" 
-                         onclick="window.abrirZoom('${p.img}', '${p.nombre}')" 
-                         style="background-image: url('${p.img}'); ${p.isAgotado ? 'filter: grayscale(80%); opacity: 0.7;' : ''}">
-                    </div>
-                </div>
+            if (p) {
+                const descripcionFormateada = p.desc.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                const precioActual = parseFloat(p.precio) || 0;
+                const precioViejo = parseFloat(p.precioOferta) || 0;
 
-                <div class="product-info-aside">
-                    <nav class="breadcrumb">Tienda / ${p.aroma || 'Colección'}</nav>
-                    <h1>${p.nombre}</h1>
-                    <p class="sku" style="color: #999; font-size: 0.8rem; margin-bottom: 15px;">REF: GD-${p.id}</p>
-                    
-                    <div class="price-container">
-                        ${precioViejo > precioActual ? `<span class="old-price" style="text-decoration: line-through; color: #999; font-size: 1.2rem;">$ ${precioViejo.toFixed(2)}</span>` : ''}
-                        <p class="price-detail">$ ${precioActual.toFixed(2)}</p>
+                root.innerHTML = `
+                    <div class="product-gallery">
+                        <div class="img-box-detail" 
+                             onclick="window.abrirZoom('${p.img}', '${p.nombre}')" 
+                             style="background-image: url('${p.img}'); cursor: zoom-in; ${p.isAgotado ? 'filter: grayscale(80%); opacity: 0.7;' : ''}">
+                             </div>
                     </div>
 
-                    <div class="purchase-box">
-                        ${!p.isAgotado ? `
-                            <div style="margin-bottom: 20px;">
-                                <label style="display:block; font-weight:bold; margin-bottom:5px;">Cantidad:</label>
-                                <input type="number" value="1" min="1" id="p-qty" class="qty-input">
-                            </div>
-                            <button class="add-btn-large" id="btnAgregar" onclick="window.alCarritoDetalle('${p.id}', '${p.nombre}', ${precioActual}, '${p.img}')">
-                                <i class="fas fa-shopping-cart"></i> AGREGAR AL CARRITO
-                            </button>
-                        ` : `
-                            <button class="add-btn-large" disabled style="background-color: #343a40; opacity: 0.5; cursor: not-allowed;">
-                                PRODUCTO AGOTADO
-                            </button>
-                        `}
+                    <div class="product-info-aside">
+                        <nav class="breadcrumb">Tienda / ${p.aroma || 'Colección'}</nav>
+                        <h1>${p.nombre}</h1>
+                        <p class="sku" style="color: #999; font-size: 0.8rem; margin-bottom: 15px;">REF: GD-${p.id}</p>
+                        
+                        <div class="price-container">
+                            ${precioViejo > precioActual ? `<span class="old-price" style="text-decoration: line-through; color: #999; font-size: 1.2rem;">$ ${precioViejo.toFixed(2)}</span>` : ''}
+                            <p class="price-detail">$ ${precioActual.toFixed(2)}</p>
+                        </div>
+
+                        <div class="purchase-box">
+                            ${!p.isAgotado ? `
+                                <div style="margin-bottom: 20px;">
+                                    <label style="display:block; font-weight:bold; margin-bottom:5px;">Cantidad:</label>
+                                    <input type="number" value="1" min="1" id="p-qty" class="qty-input">
+                                </div>
+                                <button class="add-btn-large" id="btnAgregar" onclick="window.alCarritoDetalle('${p.id}', '${p.nombre}', ${precioActual}, '${p.img}')">
+                                    <i class="fas fa-shopping-cart"></i> AGREGAR AL CARRITO
+                                </button>
+                            ` : `
+                                <button class="add-btn-large" disabled style="background-color: #343a40; opacity: 0.5; cursor: not-allowed;">
+                                    PRODUCTO AGOTADO
+                                </button>
+                            `}
+                        </div>
+
+                        <div class="product-description" style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
+                            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 15px;">Descripción</h3>
+                            <div style="color: #666; line-height: 1.8; white-space: pre-wrap;">${descripcionFormateada}</div>
+                        </div>
                     </div>
-
-                    <div class="product-description" style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
-                        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 15px;">Descripción</h3>
-                        <div style="color: #666; line-height: 1.8; white-space: pre-wrap;">${descripcionFormateada}</div>
-                    </div>
-                </div>
-            `;
-        } else {
-            root.innerHTML = `<div style="text-align:center; width:100%; padding: 50px;"><h2>Producto no encontrado</h2><a href="index.html" class="add-btn" style="display:inline-block; width:auto; padding: 10px 30px; margin-top:20px;">Volver a la Tienda</a></div>`;
-        }
-    }
-
-    /* --- FUNCIONES GLOBALES --- */
-    window.abrirZoom = function(src, nombre) {
-        const modal = document.getElementById('imageModal');
-        const img = document.getElementById('imgFull');
-        const cap = document.getElementById('caption');
-        if(modal && img) {
-            img.src = src;
-            if(cap) cap.innerText = nombre;
-            modal.style.display = "flex";
-            document.body.classList.add('no-scroll');
-        }
-    };
-
-    window.cerrarZoom = function() {
-        const modal = document.getElementById('imageModal');
-        if(modal) {
-            modal.style.display = "none";
-            document.body.classList.remove('no-scroll');
-        }
-    };
-
-    window.alCarritoDetalle = function(id, nombre, precio, img) {
-        const qty = parseInt(document.getElementById('p-qty')?.value) || 1;
-        let carrito = JSON.parse(localStorage.getItem('carrito_gyd')) || [];
-        const index = carrito.findIndex(i => String(i.id) === String(id));
-        
-        if (index !== -1) {
-            carrito[index].cantidad += qty;
-        } else {
-            carrito.push({ id: String(id), nombre, precio: parseFloat(precio), img, cantidad: qty });
-        }
-        
-        localStorage.setItem('carrito_gyd', JSON.stringify(carrito));
-        
-        const btn = document.getElementById('btnAgregar');
-        if (btn) {
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '¡AÑADIDO CON ÉXITO!';
-            btn.style.backgroundColor = "#f8b4b4";
-            btn.style.color = "#343a40";
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.backgroundColor = "";
-                btn.style.color = "";
-            }, 2000);
+                `;
+            } else {
+                root.innerHTML = `
+                    <div style="text-align:center; width:100%; padding: 50px;">
+                        <h2>Producto no encontrado</h2>
+                        <a href="index.html" class="add-btn" style="display:inline-block; width:auto; padding: 10px 30px; margin-top:20px;">Volver a la Tienda</a>
+                    </div>`;
+            }
         }
 
-        // Llamar a la actualización del carrito del script.js
-        if (typeof window.actualizarInterfazCarrito === 'function') {
-            window.actualizarInterfazCarrito();
-            document.getElementById('cartOverlay').style.display = 'flex';
-        }
-    };
-</script>
+        window.abrirZoom = function(src, nombre) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('imgFull');
+            if(modal && img) {
+                img.src = src;
+                document.getElementById('caption').innerText = nombre;
+                modal.style.display = "flex";
+                document.body.style.overflow = "hidden"; // Evita scroll al ver la foto
+            }
+        };
 
+        window.cerrarZoom = function() {
+            const modal = document.getElementById('imageModal');
+            if(modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        };
 
-<div class="img-box-detail" onclick="window.abrirZoom()">
-    <div style="position:absolute; bottom:15px; right:15px; background:rgba(255,255,255,0.8); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#333; box-shadow:0 2px 5px rgba(0,0,0,0.2);">
-        <i class="fas fa-search-plus"></i>
-    </div>
-</div><script src="script.js"></script>
+        window.alCarritoDetalle = function(id, nombre, precio, img) {
+            const qtyInput = document.getElementById('p-qty');
+            const qty = parseInt(qtyInput ? qtyInput.value : 1) || 1;
+            let carrito = JSON.parse(localStorage.getItem('carrito_gyd')) || [];
+            const index = carrito.findIndex(i => String(i.id) === String(id));
+            
+            if (index !== -1) {
+                carrito[index].cantidad += qty;
+            } else {
+                carrito.push({ id: String(id), nombre, precio: parseFloat(precio), img, cantidad: qty });
+            }
+            
+            localStorage.setItem('carrito_gyd', JSON.stringify(carrito));
+            
+            const btn = document.getElementById('btnAgregar');
+            if (btn) {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '¡AÑADIDO!';
+                btn.style.backgroundColor = "#f8b4b4";
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.backgroundColor = "";
+                }, 2000);
+            }
+
+            if (typeof window.actualizarInterfazCarrito === 'function') {
+                window.actualizarInterfazCarrito();
+                document.getElementById('cartOverlay').style.display = 'flex';
+            }
+        };
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>
