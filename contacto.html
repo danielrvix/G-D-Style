@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - G&D Style</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/logo.jpeg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+    <header>
+<nav>
+    <div class="logo"><a href="index.html">G&D Style</a></div>
+    
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Tienda</a></li>
+        <li><a href="acerca.html">Acerca de</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="faq.html">Preguntas Frecuentes</a></li>
+        <li><a href="politicas.html">Políticas</a></li>
+    </ul>
+</nav>
+    </header>
+
+    <section class="hero-title">
+        <h1>CONTÁCTANOS</h1>
+    </section>
+
+    <div class="main-container" style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 300px; padding: 20px; background: #f9f9f9; border-radius: 8px;">
+            <h3 style="margin-bottom: 15px;">Información de Contacto</h3>
+            <p><strong>WhatsApp:</strong> +58 412 1927683</p>
+            <p><strong>Instagram:</strong> @gyd_style.7</p>
+            <p><strong>Ubicación:</strong> Venezuela (Envíos a todo el país)</p>
+            <br>
+            <button class="add-btn" onclick="window.open('https://wa.me/584121927683')">Escribir por WhatsApp</button>
+        </div>
+        
+        <div style="flex: 1; min-width: 300px; padding: 20px;">
+            <h3 style="margin-bottom: 15px;">Horario de Atención</h3>
+            <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+            <p>Sábados: 10:00 AM - 4:00 PM</p>
+        </div>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>G&D Style</h4>
+            <p>Belleza y estilo a tu alcance.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Enlaces</h4>
+            <ul class="footer-links">
+                <li><a href="index.html">Tienda</a></li>
+                <li><a href="acerca.html">Acerca de</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                <li><a href="politicas.html">Políticas</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com/tu_pagina" target="_blank" class="icon-link fb">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/584121927683" target="_blank" class="icon-link wa">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2024 G&D Style - Todos los derechos reservados
+    </div>
+</footer>
+
+      <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <div class="zoom-controls">
+            <button id="zoomIn"><i class="fas fa-search-plus"></i></button>
+            <button id="zoomOut"><i class="fas fa-search-minus"></i></button>
+            <button id="rotateImg"><i class="fas fa-redo"></i></button>
+            <button id="zoomReset"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <div class="modal-wrapper" id="modalWrapper">
+            <img class="modal-content" id="imgFull" draggable="false">
+        </div>
+        <div id="caption"></div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h2>Tu Carrito</h2>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-content" id="cartItems"></div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cartTotal">$ 0,00</span></h3>
+<button class="checkout-btn" onclick="window.finalizarCompra()">Finalizar Compra</button>            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-floating-btn" id="openCartFloat">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <div class="chat-bubble" onclick="window.open('https://wa.me/584121927683', '_blank')"> <i class="fab fa-whatsapp"></i></div>
+
+    <button id="backToTop" class="back-to-top">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
