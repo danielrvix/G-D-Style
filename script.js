@@ -174,26 +174,48 @@ function toggleFilter(id) {
     }
 }
 
+window.verificarAcceso = function() {
+    // Usamos localStorage para que los datos sobrevivan al cierre del navegador
+    const isAdmin = localStorage.getItem('gd_admin_session') === 'true';
+    const adminTools = document.getElementById('admin-tools');
+
+    if (isAdmin) {
+        // Si ya está logueado, mostrar herramientas o nombre
+        if (adminTools) {
+            adminTools.innerHTML = `
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="color:#f8b4b4; font-size:0.8rem;">Hola, Daniel</span>
+                    <button onclick="logoutUniversal()" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:0.7rem; text-decoration:underline;">Salir</button>
+                </div>`;
+        }
+    } else {
+        // Si no está logueado, mostrar botón de entrar
+        if (adminTools) {
+            adminTools.innerHTML = `<button onclick="loginAdmin()" class="btn-nav-auth"><i class="fas fa-lock"></i> ENTRAR</button>`;
+        }
+    }
+};
+
+window.loginAdmin = function() {
+    const pass = prompt("Introduce la clave:");
+    if (pass === "DaniGene09") {
+        // GUARDADO PERSISTENTE: Se queda en el navegador hasta que des clic en "Salir"
+        localStorage.setItem('gd_admin_session', 'true');
+        location.reload();
+    } else if (pass !== null) {
+        alert("Clave incorrecta");
+    }
+};
+
 /* ============================================================
    FUNCIÓN GLOBAL DE LOGOUT
    ============================================================ */
 window.logoutUniversal = function() {
-    if (confirm("¿Seguro que quieres cerrar sesión?")) {
-        
-        // 1. Limpieza inmediata y total del Storage
-        sessionStorage.clear();
-        localStorage.clear(); // Por si Firebase guardó algo en persistencia larga
-
-        // 2. Intentar cierre en Firebase
-        if (typeof firebase !== 'undefined' && firebase.auth) {
-            firebase.auth().signOut().then(() => {
-                ejecutarSalidaFinal();
-            }).catch(() => {
-                ejecutarSalidaFinal();
-            });
-        } else {
-            ejecutarSalidaFinal();
-        }
+    if (confirm("¿Cerrar sesión?")) {
+        // Borramos los datos permanentemente
+        localStorage.removeItem('gd_admin_session');
+        localStorage.removeItem('gd_user_session');
+        location.reload();
     }
 };
 
