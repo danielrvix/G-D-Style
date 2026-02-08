@@ -96,6 +96,7 @@
 
                 // 1. DEFINE TU CORREO DE ADMIN AQUÍ
                 const miCorreoAdmin = "danielrvix@gmail.com"; // CAMBIA ESTO POR TU EMAIL REAL
+                const miCorreoAdmin2 = "generodriguez8585@gmail.com"; // CAMBIA ESTO POR TU EMAIL REAL
 
                 // 2. CONSULTA LA CONTRASEÑA MAESTRA EN FIREBASE
                 const snapshot = await db.ref('config/admin_pass').once('value');
@@ -109,7 +110,16 @@
                     // Si no eres tú, es un cliente y va a la tienda
                     window.location.href = 'index.html';
                 }
+
+                if (email === miCorreoAdmin2 && pass === passMaestra) {
+                    sessionStorage.setItem('gd_admin_session', 'true');
+                    window.location.href = 'admin.html';
+                } else {
+                    // Si no eres tú, es un cliente y va a la tienda
+                    window.location.href = 'index.html';
+                }
             })
+            
             .catch(err => {
                 errorMsg.innerText = "Correo o contraseña incorrectos.";
                 errorMsg.style.display = 'block';
