@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel G&D Style - Administrador</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --rosa: #f8b4b4; --oscuro: #2c3136; --rojo: #ff4d4d; --verde: #28a745; --bg: #f0f2f5; --azul: #007bff; }
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); padding: 20px; margin: 0; color: var(--oscuro); }
+        
+        .container { max-width: 650px; margin: auto; }
+
+        /* PESTAÑAS */
+        .admin-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .tab-btn { 
+            padding: 12px 20px; border: none; background: white; cursor: pointer; 
+            border-radius: 10px; font-weight: bold; transition: 0.3s; color: #888;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .tab-btn.active { background: var(--rosa); color: var(--oscuro); }
+        
+        /* Tarjetas */
+        .admin-card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            margin-bottom: 25px; 
+            border: 1px solid #eaeaea;
+        }
+
+        h2, h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--rosa); padding-bottom: 10px; }
+        
+        .campo { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; font-size: 0.9rem; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        
+        .admin-extras { background: #fff8f8; padding: 15px; border-radius: 10px; border: 1px solid #ffebeb; margin-bottom: 15px; }
+        
+        .stock-row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+        
+        /* Switch Estilizado */
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--rojo); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        .btn-post { 
+            width: 100%; background: var(--rosa); color: var(--oscuro); border: none; padding: 15px; 
+            border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; 
+            transition: 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-post:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .preview-img { width: 100%; height: 250px; object-fit: contain; border-radius: 8px; display: none; margin-top: 10px; border: 2px dashed #ddd; background: #fafafa; }
+        
+        /* Lista de Inventario */
+        .item-admin { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f0f0f0; }
+        .item-admin:last-child { border-bottom: none; }
+        .item-admin img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; }
+        
+        .btn-edit { color: var(--azul); background: #e7f3ff; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        .btn-delete { color: var(--rojo); background: #fff0f0; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        
+        .nav-back { text-align: center; margin-top: 20px; }
+        .nav-back a { color: #888; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+        .nav-back a:hover { color: var(--rosa); }
+
+        .edit-mode-active { border: 2px solid var(--verde) !important; background: #f0fff4 !important; }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="admin-tabs">
+        <button onclick="switchTab('tab-publicar')" class="tab-btn active" id="btn-tab-publicar">
+            <i class="fas fa-plus-circle"></i> NUEVO
+        </button>
+        <button onclick="switchTab('tab-lista')" class="tab-btn" id="btn-tab-lista">
+            <i class="fas fa-boxes"></i> INVENTARIO
+        </button>
+    </div>
+    
+    <div id="tab-publicar" class="admin-tab-content">
+        <div class="admin-card" id="cardFormulario">
+            <h2 id="tituloForm"><i class="fas fa-magic"></i> Nueva Publicación</h2>
+            <form id="formPublicar">
+                <div class="campo">
+                    <label>Nombre del Producto</label>
+                    <input type="text" id="nombre" placeholder="Ej: JABON SADOER" required>
+                </div>
+
+                <div class="campo">
+                    <label>Descripción detallada</label>
+                    <textarea id="descripcion" placeholder="Beneficios, marcas, etc..." required style="height: 100px; resize: none;"></textarea>
+                </div>
+
+                <div class="admin-extras">
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <div style="flex: 1;">
+                            <label>Precio Actual ($)</label>
+                            <input type="number" step="0.01" id="precio" placeholder="0.00" required>
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Precio Anterior (Oferta)</label>
+                            <input type="number" step="0.01" id="precioAnterior" placeholder="Opcional">
+                        </div>
+                    </div>
+
+                    <div class="stock-row">
+                        <label style="margin:0; color: var(--rojo); font-size: 0.85rem;"><i class="fas fa-store-slash"></i> ¿MARCAR COMO AGOTADO?</label>
+                        <label class="switch">
+                            <input type="checkbox" id="agotado">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Categoría / Aroma</label>
+                    <select id="categoria">
+                        <option value="cremas">Cremas / Jabones</option>
+                        <option value="mascarillas">Mascarillas</option>
+                        <option value="labiales">Labiales</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Foto del Producto</label>
+                    <input type="file" id="foto" accept="image/*">
+                    <img id="vistaPrevia" class="preview-img">
+                </div>
+
+                <button type="submit" class="btn-post" id="btnSubmit">
+                    <i class="fas fa-paper-plane"></i> Publicar Producto
+                </button>
+                <button type="button" id="btnCancelarEdicion" style="display:none; width:100%; background:none; border:none; color:#888; margin-top:10px; cursor:pointer; font-size:0.9rem;">
+                    <i class="fas fa-times"></i> Cancelar Edición
+                </button>
+            </form>
+        </div>
+    </div>
+<div class="campo" style="margin-bottom: 20px;">
+    <div style="position: relative;">
+        <i class="fas fa-search" style="position: absolute; left: 12px; top: 15px; color: #888;"></i>
+        <input type="text" id="busquedaInventario" placeholder="Buscar por nombre o categoría..." style="padding-left: 35px;">
+    </div>
+</div>
+    <div id="tab-lista" class="admin-tab-content" style="display: none;">
+        <div class="admin-card">
+            <h3><i class="fas fa-boxes"></i> Inventario de Productos</h3>
+            <div id="listaProductosAdmin">
+                </div>
+        </div>
+    </div>
+
+    <div class="nav-back">
+        <a href="index.html"><i class="fas fa-arrow-left"></i> Volver a la Tienda</a>
+    </div>
+
+</div>
+
+<script src="admin.js"></script>
+
+<script>
+    // 1. MANEJO DE PESTAÑAS
+    function switchTab(tabId) {
+        document.querySelectorAll('.admin-tab-content').forEach(t => t.style.display = 'none');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        
+        document.getElementById(tabId).style.display = 'block';
+        document.getElementById('btn-' + tabId).classList.add('active');
+    }
+
+    // 2. VISTA PREVIA DE IMAGEN
+    const inputFoto = document.getElementById('foto');
+    const vistaPrevia = document.getElementById('vistaPrevia');
+
+    inputFoto.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                vistaPrevia.src = e.target.result;
+                vistaPrevia.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // 3. BOTÓN CANCELAR (RESETEO)
+    document.getElementById('btnCancelarEdicion').addEventListener('click', () => {
+        if(confirm("¿Cancelar edición? Los cambios no se guardarán.")) {
+            location.href = 'admin.html';
+        }
+    });
+</script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  // Tu configuración de la consola de Firebase
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "gyd-style.firebaseapp.com",
+    databaseURL: "https://gyd-style-default-rtdb.firebaseio.com",
+    projectId: "gyd-style",
+    storageBucket: "gyd-style.appspot.com",
+    messagingSenderId: "TU_ID",
+    appId: "TU_APP_ID"
+  };
+  
+  // Inicializar Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+<div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+    <button onclick="cerrarSesion()" style="background: #eee; border: none; padding: 10px 20px; border-radius: 20px; color: #666; cursor: pointer; font-size: 0.8rem;">
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión Segura
+    </button>
+</div>
+
+<script>
+    function cerrarSesion() {
+        sessionStorage.removeItem('gd_admin_session');
+        window.location.href = 'login.html';
+    }
+</script>
+
+</body>
+
+</html>

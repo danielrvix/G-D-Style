@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - G&D Style</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --rosa: #f8b4b4; --oscuro: #2c3136; --bg: #f9f9f9; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        .perfil-card { background: white; max-width: 450px; margin: 40px auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
+        .avatar { width: 80px; height: 80px; background: var(--rosa); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; }
+        .info-group { text-align: left; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+        .info-item { margin-bottom: 20px; position: relative; }
+        .label { color: #888; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+        input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; box-sizing: border-box; background: #fbfbfb; }
+        input:disabled { background: transparent; border-color: transparent; color: var(--oscuro); font-weight: bold; padding-left: 0; }
+        .btn-edit { background: none; border: none; color: var(--rosa); cursor: pointer; font-size: 0.8rem; font-weight: bold; float: right; }
+        .btn-save { width: 100%; padding: 12px; background: var(--rosa); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; display: none; margin-top: 10px; }
+        .btn-volver { display: inline-block; margin-top: 20px; color: #888; text-decoration: none; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="perfil-card">
+    <div class="avatar"><i class="fas fa-user"></i></div>
+    <h2 id="displayNombre">Cargando...</h2>
+    
+    <div class="info-group">
+        <div class="info-item">
+            <button class="btn-edit" onclick="habilitarEdicion('nombreInput')">EDITAR</button>
+            <span class="label">Nombre Completo</span>
+            <input type="text" id="nombreInput" disabled>
+        </div>
+
+        <div class="info-item">
+            <button class="btn-edit" onclick="habilitarEdicion('passInput')">CAMBIAR</button>
+            <span class="label">Nueva Contraseña</span>
+            <input type="password" id="passInput" placeholder="********" disabled>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Correo Electrónico</span>
+            <input type="text" id="emailDisplay" disabled>
+        </div>
+    </div>
+
+    <button id="btnGuardar" class="btn-save" onclick="guardarCambios()">GUARDAR CAMBIOS</button>
+    <br>
+    <a href="index.html" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a la Tienda</a>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCJ9_6Dg2lf2MLJTat6ygergU5OHCNh7mI",
+        authDomain: "gyd-style.firebaseapp.com",
+        databaseURL: "https://gyd-style-default-rtdb.firebaseio.com",
+        projectId: "gyd-style",
+        storageBucket: "gyd-style.firebasestorage.app",
+        messagingSenderId: "154759089927",
+        appId: "1:154759089927:web:54d27c640301436a713fa2"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const auth = firebase.auth();
+
+    let uidUsuario = "";
+
+    // 1. Cargar Datos
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            uidUsuario = user.uid;
+            db.ref('usuarios/' + uidUsuario).once('value').then((snap) => {
+                const data = snap.val();
+                if (data) {
+                    document.getElementById('displayNombre').innerText = data.nombre;
+                    document.getElementById('nombreInput').value = data.nombre;
+                    document.getElementById('emailDisplay').value = data.correo;
+                }
+            });
+        } else {
+            window.location.href = 'login.html';
+        }
+    });
+
+    // 2. Habilitar campos
+    function habilitarEdicion(id) {
+        const input = document.getElementById(id);
+        input.disabled = false;
+        input.focus();
+        input.style.borderBottom = "2px solid #f8b4b4";
+        document.getElementById('btnGuardar').style.display = "block";
+    }
+
+    // 3. Guardar en Firebase
+    async function guardarCambios() {
+        const nuevoNombre = document.getElementById('nombreInput').value;
+        const nuevaPass = document.getElementById('passInput').value;
+        const btn = document.getElementById('btnGuardar');
+
+        btn.innerText = "Guardando...";
+        btn.disabled = true;
+
+        try {
+            // Actualizar nombre en Database
+            await db.ref('usuarios/' + uidUsuario).update({ nombre: nuevoNombre });
+
+            // Actualizar contraseña en Auth (si se escribió algo)
+            if (nuevaPass.length >= 6) {
+                await auth.currentUser.updatePassword(nuevaPass);
+            } else if (nuevaPass.length > 0) {
+                alert("La contraseña debe tener al menos 6 caracteres.");
+                btn.disabled = false;
+                return;
+            }
+
+            alert("Datos actualizados correctamente.");
+            location.reload();
+        } catch (error) {
+            alert("Error: Para cambiar la clave debes haber iniciado sesión recientemente.");
+            console.error(error);
+            btn.disabled = false;
+            btn.innerText = "GUARDAR CAMBIOS";
+        }
+    }
+</script>
+</body>
+</html>

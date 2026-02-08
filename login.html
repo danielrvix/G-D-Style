@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - G&D Style</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --rosa: #f8b4b4; --oscuro: #2c3136; --bg: #f0f2f5; }
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; padding: 20px; }
+        .login-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 380px; text-align: center; }
+        .logo-circle { width: 70px; height: 70px; background: var(--rosa); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white; }
+        h2 { margin-bottom: 5px; color: var(--oscuro); font-size: 1.5rem; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid #eee; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: none; cursor: pointer; color: #888; font-weight: bold; transition: 0.3s; }
+        .tab-btn.active { color: var(--rosa); border-bottom: 2px solid var(--rosa); }
+        input { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        button#btnAuth { width: 100%; padding: 12px; border: none; background: var(--rosa); color: var(--oscuro); font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button#btnAuth:hover { opacity: 0.9; }
+        button#btnAuth:disabled { background: #ccc; }
+        .error-msg { color: #ff4d4d; font-size: 0.8rem; margin-bottom: 15px; display: none; background: #fff1f1; padding: 10px; border-radius: 8px; border: 1px solid #ffcccc; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="logo-circle"><i class="fas fa-user-shield"></i></div>
+    <h2 id="authTitle">G&D Style</h2>
+    <p id="subTitle" style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">Acceso seguro</p>
+    
+    <div class="tabs">
+        <button class="tab-btn active" id="tabL" onclick="toggleAuth(true)">Entrar</button>
+        <button class="tab-btn" id="tabR" onclick="toggleAuth(false)">Registrarse</button>
+    </div>
+
+    <p id="error" class="error-msg"></p>
+
+    <form id="authForm">
+        <input type="text" id="nombre" placeholder="Nombre completo" style="display:none">
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <input type="password" id="pass" placeholder="Contraseña" required>
+        <button type="submit" id="btnAuth">ENTRAR</button>
+    </form>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+  // Tu configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCJ9_6Dg2lf2MLJTat6ygergU5OHCNh7mI",
+    authDomain: "gyd-style.firebaseapp.com",
+    databaseURL: "https://gyd-style-default-rtdb.firebaseio.com",
+    projectId: "gyd-style",
+    storageBucket: "gyd-style.firebasestorage.app",
+    messagingSenderId: "154759089927",
+    appId: "1:154759089927:web:54d27c640301436a713fa2",
+    measurementId: "G-JV50RMY5WM"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
+
+  let isLoginMode = true;
+
+  function toggleAuth(isLogin) {
+    isLoginMode = isLogin;
+    document.getElementById('nombre').style.display = isLogin ? 'none' : 'block';
+    document.getElementById('nombre').required = !isLogin;
+    document.getElementById('btnAuth').innerText = isLogin ? 'ENTRAR' : 'CREAR CUENTA';
+    document.getElementById('tabL').classList.toggle('active', isLogin);
+    document.getElementById('tabR').classList.toggle('active', !isLogin);
+    document.getElementById('error').style.display = 'none';
+  }
+
+  document.getElementById('authForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('pass').value;
+    const nombre = document.getElementById('nombre').value;
+    const btn = document.getElementById('btnAuth');
+    const errorMsg = document.getElementById('error');
+
+    btn.innerText = "Verificando...";
+    btn.disabled = true;
+    errorMsg.style.display = 'none';
+
+    if (isLoginMode) {
+        // --- INICIO DE SESIÓN ---
+        auth.signInWithEmailAndPassword(email, pass)
+            .then(async (userCredential) => {
+                sessionStorage.setItem('gd_user_session', 'true');
+
+                // 1. DEFINE TU CORREO DE ADMIN AQUÍ
+                const miCorreoAdmin = "danielrvix@gmail.com"; // CAMBIA ESTO POR TU EMAIL REAL
+
+                // 2. CONSULTA LA CONTRASEÑA MAESTRA EN FIREBASE
+                const snapshot = await db.ref('config/admin_pass').once('value');
+                const passMaestra = snapshot.val();
+
+                // 3. VALIDACIÓN DE IDENTIDAD
+                if (email === miCorreoAdmin && pass === passMaestra) {
+                    sessionStorage.setItem('gd_admin_session', 'true');
+                    window.location.href = 'admin.html';
+                } else {
+                    // Si no eres tú, es un cliente y va a la tienda
+                    window.location.href = 'index.html';
+                }
+            })
+            .catch(err => {
+                errorMsg.innerText = "Correo o contraseña incorrectos.";
+                errorMsg.style.display = 'block';
+                btn.innerText = "ENTRAR";
+                btn.disabled = false;
+            });
+    } else {
+        // --- REGISTRO ---
+        auth.createUserWithEmailAndPassword(email, pass)
+            .then((userCredential) => {
+                db.ref('usuarios/' + userCredential.user.uid).set({
+                    nombre: nombre,
+                    correo: email,
+                    rol: 'cliente',
+                    fecha: Date.now()
+                }).then(() => {
+                    alert("¡Cuenta creada con éxito!");
+                    location.reload();
+                });
+            })
+            .catch(err => {
+                errorMsg.innerText = "Error: " + err.message;
+                errorMsg.style.display = 'block';
+                btn.innerText = "CREAR CUENTA";
+                btn.disabled = false;
+            });
+    }
+  });
+</script>
+</body>
+</html>

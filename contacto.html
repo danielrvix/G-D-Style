@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Contacto - G&D Style</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/logo.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">G&D Style</a></div>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Tienda</a></li>
+                <li><a href="acerca.html">Acerca de</a></li>
+                <li><a href="contacto.html" class="active">Contacto</a></li>
+                <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                <li><a href="politicas.html">Políticas</a></li>
+                <li id="admin-tools"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-title">
+        <h1>CONTÁCTANOS</h1>
+    </section>
+
+    <div class="main-container" style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-top: 40px; margin-bottom: 60px;">
+        <div style="flex: 1; min-width: 300px; padding: 30px; background: #fdf2f2; border-radius: 12px; border: 1px solid #f8b4b4;">
+            <h3 style="margin-bottom: 20px; font-family: 'Playfair Display'; color: #2c3136;">Información de Contacto</h3>
+            <p style="margin-bottom: 10px;"><strong><i class="fab fa-whatsapp"></i> WhatsApp:</strong> +58 412 1927683</p>
+            <p style="margin-bottom: 10px;"><strong><i class="fab fa-instagram"></i> Instagram:</strong> @gyd_style.7</p>
+            <p style="margin-bottom: 25px;"><strong><i class="fas fa-map-marker-alt"></i> Ubicación:</strong> Venezuela (Envíos a todo el país)</p>
+            
+            <button class="add-to-cart-btn" style="width: 100%;" onclick="window.open('https://wa.me/584121927683')">
+                ESCRIBIR POR WHATSAPP
+            </button>
+        </div>
+        
+        <div style="flex: 1; min-width: 300px; padding: 30px;">
+            <h3 style="margin-bottom: 20px; font-family: 'Playfair Display'; color: #2c3136;">Horario de Atención</h3>
+            <p style="margin-bottom: 10px; color: #666;"><strong>Lunes a Viernes:</strong><br> 9:00 AM - 6:00 PM</p>
+            <p style="margin-bottom: 10px; color: #666;"><strong>Sábados:</strong><br> 10:00 AM - 4:00 PM</p>
+            <p style="margin-top: 20px; font-style: italic; font-size: 0.9rem; color: #f8b4b4;">* Respondemos tus dudas a la brevedad posible.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>G&D Style</h4>
+                <p>Belleza y estilo a tu alcance.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Enlaces</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Tienda</a></li>
+                    <li><a href="acerca.html">Acerca de</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                    <li><a href="politicas.html">Políticas</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" target="_blank" class="icon-link fb">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://wa.me/584121927683" target="_blank" class="icon-link wa">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 G&D Style - Todos los derechos reservados
+        </div>
+    </footer>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h2>Tu Carrito</h2>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-content" id="cartItems"></div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cartTotal">$ 0,00</span></h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button class="checkout-btn" onclick="window.finalizarCompra()">Finalizar Compra</button>
+                    <button id="btnVaciarCarrito" class="btn-reset-cart">VACIAR CARRITO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-floating-btn" id="openCartFloat">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <div class="chat-bubble" onclick="window.open('https://wa.me/584121927683', '_blank')"> 
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
