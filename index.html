@@ -84,14 +84,35 @@
             </div>
         </div>
 
-        <div class="filter-group">
-            <div class="filter-label" onclick="toggleFilter('aroma-opts')">Categorías <span>+</span></div>
-            <ul id="aroma-opts" class="filter-options" style="display: none; list-style: none;">
-                <li><label><input type="checkbox" class="filter-check" value="labiales"> Labiales</label></li>
-                <li><label><input type="checkbox" class="filter-check" value="mascarillas"> Mascarillas</label></li>
-                <li><label><input type="checkbox" class="filter-check" value="cremas"> Cremas</label></li>
-            </ul>
-        </div>
+<div class="filter-group">
+    <div class="filter-label" onclick="toggleFilter('aroma-opts')">Categorías <span>+</span></div>
+    <ul id="aroma-opts" class="filter-options" style="display: none; list-style: none; padding-left: 10px;">
+        
+        <li style="margin-top: 10px; font-weight: bold; color: var(--rosa); font-size: 0.8rem; text-transform: uppercase;">Cuidado Facial</li>
+        <li><label><input type="checkbox" class="filter-check" value="mascarillas"> Mascarillas</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="cremas"> Cremas / Hidratantes</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="serums"> Serums y Sueros</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="limpiadores"> Limpiadores y Geles</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="proteccion-solar"> Protectores Solares</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="contorno-ojos"> Contorno de Ojos</label></li>
+
+        <li style="margin-top: 10px; font-weight: bold; color: var(--rosa); font-size: 0.8rem; text-transform: uppercase;">Maquillaje</li>
+        <li><label><input type="checkbox" class="filter-check" value="labiales"> Labiales y Gloss</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="bases-polvos"> Bases y Polvos</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="sombras-paletas"> Sombras y Paletas</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="cejas-pestanas"> Cejas y Pestañas</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="iluminadores-rubor"> Iluminadores y Rubor</label></li>
+
+        <li style="margin-top: 10px; font-weight: bold; color: var(--rosa); font-size: 0.8rem; text-transform: uppercase;">Cuidado Personal</li>
+        <li><label><input type="checkbox" class="filter-check" value="lociones-body"> Lociones y Body Splash</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="manos-pies"> Manos y Pies</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="cabello"> Cuidado Capilar</label></li>
+
+        <li style="margin-top: 10px; font-weight: bold; color: var(--rosa); font-size: 0.8rem; text-transform: uppercase;">Accesorios</li>
+        <li><label><input type="checkbox" class="filter-check" value="brochas-esponjas"> Brochas y Esponjas</label></li>
+        <li><label><input type="checkbox" class="filter-check" value="herramientas-belleza"> Herramientas de Belleza</label></li>
+    </ul>
+</div>
         
         <button id="btnVaciarCarrito" class="btn-reset-cart">
             <i class="fas fa-trash-alt"></i> VACIAR CARRITO
