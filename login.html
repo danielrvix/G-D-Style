@@ -48,7 +48,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script>
-  // Tu configuración de Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCJ9_6Dg2lf2MLJTat6ygergU5OHCNh7mI",
     authDomain: "gyd-style.firebaseapp.com",
@@ -76,9 +75,9 @@
     document.getElementById('error').style.display = 'none';
   }
 
-  document.getElementById('authForm').addEventListener('submit', (e) => {
+  document.getElementById('authForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('email').value;
+    const email = document.getElementById('email').value.trim().toLowerCase();
     const pass = document.getElementById('pass').value;
     const nombre = document.getElementById('nombre').value;
     const btn = document.getElementById('btnAuth');
@@ -90,42 +89,38 @@
 
     if (isLoginMode) {
         // --- INICIO DE SESIÓN ---
-        auth.signInWithEmailAndPassword(email, pass)
-            .then(async (userCredential) => {
-                sessionStorage.setItem('gd_user_session', 'true');
-
-                // 1. DEFINE TU CORREO DE ADMIN AQUÍ
-                const miCorreoAdmin = "danielrvix@gmail.com"; // CAMBIA ESTO POR TU EMAIL REAL
-                const miCorreoAdmin2 = "generodriguez8585@gmail.com"; // CAMBIA ESTO POR TU EMAIL REAL
-
-                // 2. CONSULTA LA CONTRASEÑA MAESTRA EN FIREBASE
-                const snapshot = await db.ref('config/admin_pass').once('value');
-                const passMaestra = snapshot.val();
-
-                // 3. VALIDACIÓN DE IDENTIDAD
-                if (email === miCorreoAdmin && pass === passMaestra) {
-                    sessionStorage.setItem('gd_admin_session', 'true');
-                    window.location.href = 'admin.html';
-                } else {
-                    // Si no eres tú, es un cliente y va a la tienda
-                    window.location.href = 'index.html';
-                }
-
-                if (email === miCorreoAdmin2 && pass === passMaestra) {
-                    sessionStorage.setItem('gd_admin_session', 'true');
-                    window.location.href = 'admin.html';
-                } else {
-                    // Si no eres tú, es un cliente y va a la tienda
-                    window.location.href = 'index.html';
-                }
-            })
+        try {
+            const userCredential = await auth.signInWithEmailAndPassword(email, pass);
             
-            .catch(err => {
-                errorMsg.innerText = "Correo o contraseña incorrectos.";
-                errorMsg.style.display = 'block';
-                btn.innerText = "ENTRAR";
-                btn.disabled = false;
-            });
+            // 1. Lista de administradores autorizados
+            const admins = ["danielrvix@gmail.com", "generodriguez8585@gmail.com"];
+
+            // 2. Obtener la contraseña maestra de Firebase
+            const snapshot = await db.ref('config/admin_pass').once('value');
+            const passMaestra = snapshot.val();
+
+            // 3. Limpiar cualquier sesión previa
+            localStorage.removeItem('gd_admin_session');
+            localStorage.removeItem('gd_user_session');
+
+            // 4. Lógica de Redirección Unificada
+            if (admins.includes(email) && pass === passMaestra) {
+                // Es Administrador
+                localStorage.setItem('gd_admin_session', 'true');
+                localStorage.setItem('gd_user_session', 'true');
+                window.location.replace('admin.html');
+            } else {
+                // Es Cliente
+                localStorage.setItem('gd_user_session', 'true');
+                window.location.replace('index.html');
+            }
+
+        } catch (err) {
+            errorMsg.innerText = "Correo o contraseña incorrectos.";
+            errorMsg.style.display = 'block';
+            btn.innerText = "ENTRAR";
+            btn.disabled = false;
+        }
     } else {
         // --- REGISTRO ---
         auth.createUserWithEmailAndPassword(email, pass)
