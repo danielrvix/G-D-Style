@@ -26,33 +26,36 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarInterfazCarrito();
 
     // 2. Gestión de Herramientas de Usuario/Admin (Estética G&D)
-    const adminTools = document.getElementById('admin-tools');
-
+const adminTools = document.getElementById('admin-tools');
     if (adminTools) {
-        const isAdmin = sessionStorage.getItem('gd_admin_session') === 'true';
-        const isUser = sessionStorage.getItem('gd_user_session') === 'true';
+    // Usamos localStorage para evitar el rebote del login
+    const isAdmin = localStorage.getItem('gd_admin_session') === 'true';
+    const isUser = localStorage.getItem('gd_user_session') === 'true';
 
-        if (isAdmin) {
-            adminTools.innerHTML = `
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <a href="admin.html" class="btn-nav-auth admin-highlight">
-                        <i class="fas fa-tools"></i> PANEL ADMIN
-                    </a>
-                    <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>`;
-        } else if (isUser) {
-            adminTools.innerHTML = `
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <a href="perfil.html" class="btn-nav-auth user"><i class="fas fa-user-circle"></i> PERFIL</a>
-                    <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>`;
-        } else {
-            adminTools.innerHTML = `<a href="login.html" class="btn-nav-auth"><i class="fas fa-lock"></i> ENTRAR</a>`;
-        }
+    if (isAdmin) {
+        // Interfaz para Daniel o Gene
+        adminTools.innerHTML = `
+            <div style="display:flex; align-items:center; gap:8px;">
+                <a href="admin.html" class="btn-nav-auth admin-highlight">
+                    <i class="fas fa-tools"></i> PANEL ADMIN
+                </a>
+                <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>`;
+    } else if (isUser) {
+        // Interfaz para Clientes registrados
+        adminTools.innerHTML = `
+            <div style="display:flex; align-items:center; gap:8px;">
+                <a href="perfil.html" class="btn-nav-auth user"><i class="fas fa-user-circle"></i> PERFIL</a>
+                <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>`;
+    } else {
+        // Usuario no identificado
+        adminTools.innerHTML = `<a href="login.html" class="btn-nav-auth"><i class="fas fa-lock"></i> ENTRAR</a>`;
+    }
 
         // Inyección de Estilos Dinámicos
         if (!document.getElementById('nav-auth-styles')) {
@@ -208,18 +211,31 @@ window.loginAdmin = function() {
    FUNCIÓN GLOBAL DE LOGOUT
    ============================================================ */
 window.logoutUniversal = function() {
-    if (confirm("¿Cerrar sesión?")) {
-        // Borramos en AMBOS sitios para no dejar rastro
+    if (confirm("¿Cerrar sesión en G&D Style?")) {
+        // 1. Cerrar sesión en Firebase si el SDK está cargado
+        if (typeof auth !== 'undefined') {
+            auth.signOut().catch(err => console.log("Error al salir de Firebase"));
+        }
+
+        // 2. Limpiar TODA la memoria local y de sesión
         localStorage.removeItem('gd_admin_session');
         localStorage.removeItem('gd_user_session');
         sessionStorage.removeItem('gd_admin_session');
         sessionStorage.removeItem('gd_user_session');
-        
-        // Limpieza total
         sessionStorage.clear();
-        
-        // Redirigir forzando recarga limpia
-        window.location.href = 'index.html?v=' + Date.now();
+
+        // 3. Redirigir al inicio con un parámetro para limpiar caché
+        window.location.href = 'index.html?session=closed&t=' + Date.now();
+    }
+};
+
+window.proteccionAdmin = function() {
+    // Buscamos la llave persistente
+    const isAdmin = localStorage.getItem('gd_admin_session') === 'true';
+    
+    if (!isAdmin) {
+        // Si no la encuentra, al login
+        window.location.replace('login.html');
     }
 };
 
@@ -238,7 +254,8 @@ function cargarProductosTienda() {
             <p>Cargando productos...</p>
         </div>`;
 
-    const esAdmin = sessionStorage.getItem('gd_admin_session') === 'true';
+    // FIX: Cambiado sessionStorage por localStorage
+    const esAdmin = localStorage.getItem('gd_admin_session') === 'true';
 
     db.ref('productos').on('value', (snapshot) => {
         const data = snapshot.val();
@@ -334,6 +351,32 @@ window.agregarAlCarritoRapido = function(id, nombre, precio, img) {
     if(cartOverlay) cartOverlay.style.display = 'flex';
 };
 
+// --- 1. DETECTOR DEL BOTÓN ATRÁS (Añade esto al inicio de tu script global) ---
+window.addEventListener('popstate', function (event) {
+    // Si el carrito está visible y el usuario da atrás en el cel
+    if (cartOverlay && cartOverlay.style.display === 'flex') {
+        // Cerramos visualmente sin recargar
+        cartOverlay.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Rehabilitar scroll
+    }
+}, false);
+
+// --- 2. MODIFICACIÓN EN LA APERTURA DEL CARRITO ---
+// Busca tu función abrirCarrito y asegúrate de que tenga el pushState
+window.abrirCarrito = function() {
+    if(cartOverlay) {
+        cartOverlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Bloquear scroll
+        
+        // "Engañamos" al historial: creamos una entrada virtual
+        // Así, al dar "atrás", el navegador vuelve al estado anterior (cerrado)
+        history.pushState({ cartOpen: true }, "");
+        
+        window.actualizarInterfazCarrito();
+    }
+};
+
+// --- 3. TU FUNCIÓN DE INTERFAZ (Sin cambios en tu estilo visual) ---
 window.actualizarInterfazCarrito = function() {
     const cart = JSON.parse(localStorage.getItem(window.CART_NAME)) || [];
     if (!cartContent) return;
@@ -349,7 +392,6 @@ window.actualizarInterfazCarrito = function() {
             const subtotal = precioNum * item.cantidad;
             total += subtotal;
 
-            // Mantenemos EXACTAMENTE tu estructura y estilos anteriores
             cartContent.insertAdjacentHTML('beforeend', `
                 <div class="cart-item" style="display:flex; align-items:center; gap:12px; margin-bottom:15px; border-bottom:1px solid #f0f0f0; padding-bottom:10px;">
                     <a href="detalles.html?id=${item.id}" style="display:block;">
@@ -382,6 +424,18 @@ window.actualizarInterfazCarrito = function() {
     }
 };
 
+// --- 4. FUNCIÓN PARA CERRAR MANUALMENTE (X o fuera del carrito) ---
+window.cerrarCarrito = function() {
+    if(cartOverlay) {
+        cartOverlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        
+        // Si el usuario cerró con la [X], eliminamos la entrada virtual del historial
+        if (history.state && history.state.cartOpen) {
+            history.back();
+        }
+    }
+};
 window.eliminarItem = (index) => {
     let cart = JSON.parse(localStorage.getItem(window.CART_NAME)) || [];
     cart.splice(index, 1);
