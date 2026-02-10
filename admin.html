@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Panel G&D Style - Administrador</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -62,8 +62,8 @@
         .item-admin:last-child { border-bottom: none; }
         .item-admin img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; }
         
-        .btn-edit { color: var(--azul); background: #e7f3ff; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
-        .btn-delete { color: var(--rojo); background: #fff0f0; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        .btn-edit { color: var(--azul); background: #e7f3ff; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-delete { color: var(--rojo); background: #fff0f0; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
         
         .nav-back { text-align: center; margin-top: 20px; }
         .nav-back a { color: #888; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
@@ -71,11 +71,14 @@
 
         .edit-mode-active { border: 2px solid var(--verde) !important; background: #f0fff4 !important; }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
+
+<script>
+    if (localStorage.getItem('gd_admin_session') !== 'true') {
+        window.location.replace('login.html');
+    }
+</script>
 
 <div class="container">
 
@@ -123,14 +126,40 @@
                     </div>
                 </div>
 
-                <div class="campo">
-                    <label>Categoría / Aroma</label>
-                    <select id="categoria">
-                        <option value="cremas">Cremas / Jabones</option>
-                        <option value="mascarillas">Mascarillas</option>
-                        <option value="labiales">Labiales</option>
-                    </select>
-                </div>
+<div class="campo">
+    <label>Categoría del Producto</label>
+    <select id="categoria" required>
+        <option value="" disabled selected>Selecciona una categoría...</option>
+        
+        <optgroup label="Cuidado Facial">
+            <option value="mascarillas">Mascarillas</option>
+            <option value="cremas">Cremas / Hidratantes</option>
+            <option value="serums">Serums y Sueros</option>
+            <option value="limpiadores">Limpiadores y Geles</option>
+            <option value="proteccion-solar">Protectores Solares</option>
+            <option value="contorno-ojos">Contorno de Ojos</option>
+        </optgroup>
+
+        <optgroup label="Maquillaje">
+            <option value="labiales">Labiales y Gloss</option>
+            <option value="bases-polvos">Bases y Polvos</option>
+            <option value="sombras-paletas">Sombras y Paletas</option>
+            <option value="cejas-pestanas">Cejas y Pestañas</option>
+            <option value="iluminadores-rubor">Iluminadores y Rubor</option>
+        </optgroup>
+
+        <optgroup label="Cuidado Personal">
+            <option value="lociones-body">Lociones y Body Splash</option>
+            <option value="manos-pies">Manos y Pies</option>
+            <option value="cabello">Cuidado Capilar</option>
+        </optgroup>
+
+        <optgroup label="Accesorios">
+            <option value="brochas-esponjas">Brochas y Esponjas</option>
+            <option value="herramientas-belleza">Herramientas de Belleza</option>
+        </optgroup>
+    </select>
+</div>
 
                 <div class="campo">
                     <label>Foto del Producto</label>
@@ -147,13 +176,15 @@
             </form>
         </div>
     </div>
-<div class="campo" style="margin-bottom: 20px;">
-    <div style="position: relative;">
-        <i class="fas fa-search" style="position: absolute; left: 12px; top: 15px; color: #888;"></i>
-        <input type="text" id="busquedaInventario" placeholder="Buscar por nombre o categoría..." style="padding-left: 35px;">
-    </div>
-</div>
+
     <div id="tab-lista" class="admin-tab-content" style="display: none;">
+        <div class="campo" style="margin-bottom: 20px;">
+            <div style="position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 12px; top: 15px; color: #888;"></i>
+                <input type="text" id="busquedaInventario" placeholder="Buscar por nombre o categoría..." style="padding-left: 35px;">
+            </div>
+        </div>
+
         <div class="admin-card">
             <h3><i class="fas fa-boxes"></i> Inventario de Productos</h3>
             <div id="listaProductosAdmin">
@@ -165,9 +196,34 @@
         <a href="index.html"><i class="fas fa-arrow-left"></i> Volver a la Tienda</a>
     </div>
 
+    <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+        <button onclick="cerrarSesion()" style="background: #eee; border: none; padding: 10px 20px; border-radius: 20px; color: #666; cursor: pointer; font-size: 0.8rem;">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión Segura
+        </button>
+    </div>
+
 </div>
 
-<script src="admin.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  // Configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY", // Rellena esto si es necesario, aunque uses admin.js
+    authDomain: "gyd-style.firebaseapp.com",
+    databaseURL: "https://gyd-style-default-rtdb.firebaseio.com",
+    projectId: "gyd-style",
+    storageBucket: "gyd-style.appspot.com",
+    messagingSenderId: "TU_ID",
+    appId: "TU_APP_ID"
+  };
+  
+  if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+  }
+  const db = firebase.database();
+</script>
 
 <script>
     // 1. MANEJO DE PESTAÑAS
@@ -183,59 +239,31 @@
     const inputFoto = document.getElementById('foto');
     const vistaPrevia = document.getElementById('vistaPrevia');
 
-    inputFoto.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                vistaPrevia.src = e.target.result;
-                vistaPrevia.style.display = 'block';
+    if (inputFoto) {
+        inputFoto.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    vistaPrevia.src = e.target.result;
+                    vistaPrevia.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
             }
-            reader.readAsDataURL(file);
-        }
-    });
+        });
+    }
 
-    // 3. BOTÓN CANCELAR (RESETEO)
-    document.getElementById('btnCancelarEdicion').addEventListener('click', () => {
-        if(confirm("¿Cancelar edición? Los cambios no se guardarán.")) {
-            location.href = 'admin.html';
-        }
-    });
-</script>
-
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-<script>
-  // Tu configuración de la consola de Firebase
-  const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "gyd-style.firebaseapp.com",
-    databaseURL: "https://gyd-style-default-rtdb.firebaseio.com",
-    projectId: "gyd-style",
-    storageBucket: "gyd-style.appspot.com",
-    messagingSenderId: "TU_ID",
-    appId: "TU_APP_ID"
-  };
-  
-  // Inicializar Firebase
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-</script>
-
-<div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
-    <button onclick="cerrarSesion()" style="background: #eee; border: none; padding: 10px 20px; border-radius: 20px; color: #666; cursor: pointer; font-size: 0.8rem;">
-        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión Segura
-    </button>
-</div>
-
-<script>
+    // 3. CERRAR SESIÓN (CORREGIDO)
     function cerrarSesion() {
-        sessionStorage.removeItem('gd_admin_session');
-        window.location.href = 'login.html';
+        if(confirm("¿Cerrar sesión de administrador?")) {
+            localStorage.removeItem('gd_admin_session');
+            sessionStorage.removeItem('gd_admin_session');
+            window.location.href = 'login.html';
+        }
     }
 </script>
 
-</body>
+<script src="admin.js"></script>
 
+</body>
 </html>
