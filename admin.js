@@ -1,87 +1,78 @@
-// 1. VARIABLE GLOBAL DE CONTROL
+/* ============================================================
+   1. SEGURIDAD Y CONTROL GLOBAL (FIX REBOTE)
+   ============================================================ */
 let editandoID = null;
 
-// BLOQUEO DE SEGURIDAD
-if (sessionStorage.getItem('gd_admin_session') !== 'true') {
-    window.location.href = 'login.html';
+// UNIFICACIÓN: Ahora buscamos en localStorage igual que el Login
+if (localStorage.getItem('gd_admin_session') !== 'true') {
+    console.log("Acceso no autorizado detectado.");
+    window.location.replace('login.html'); // Usamos replace para limpiar el historial
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializar lista de inventario
     actualizarListaControlAdmin();
 
-    // --- NUEVA LÓGICA: DETECTAR EDICIÓN DESDE URL ---
-    // Esto permite que el botón "Editar" de la tienda funcione al redirigir
+    // --- DETECTAR EDICIÓN DESDE URL ---
     const urlParams = new URLSearchParams(window.location.search);
     const idParaEditar = urlParams.get('edit');
     
     if (idParaEditar) {
-        // Pequeño delay para asegurar que Firebase esté listo
         setTimeout(() => {
             window.prepararEdicion(idParaEditar);
-        }, 500);
+        }, 600);
     }
 
-    // 2. MANEJO DEL FORMULARIO (SUBMIT)
+    // --- MANEJO DEL FORMULARIO ---
     const form = document.getElementById('formPublicar');
     if (form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // CAPTURA DE DATOS
-            const nombreVal = document.getElementById('nombre').value;
-            const descVal = document.getElementById('descripcion').value;
-            const precioVal = document.getElementById('precio').value;
-            const precioAntVal = document.getElementById('precioAnterior').value || "";
-            const catVal = document.getElementById('categoria').value;
-            const agotadoVal = document.getElementById('agotado').checked;
             const imgVal = document.getElementById('vistaPrevia').src;
 
-            // Validación de imagen
-            if (!imgVal || imgVal.includes('window.location') || imgVal === "") {
+            if (!imgVal || imgVal === "" || imgVal.includes('window.location')) {
                 alert("Por favor, sube una foto del producto.");
                 return;
             }
 
             const productoObj = {
-                id: editandoID || Date.now().toString(), // Mantiene el ID si es edición
-                nombre: nombreVal,
-                desc: descVal,
-                precio: precioVal,
-                precioOferta: precioAntVal,
-                aroma: catVal,
-                isAgotado: agotadoVal,
+                id: editandoID || Date.now().toString(),
+                nombre: document.getElementById('nombre').value,
+                desc: document.getElementById('descripcion').value,
+                precio: document.getElementById('precio').value,
+                precioOferta: document.getElementById('precioAnterior').value || "",
+                aroma: document.getElementById('categoria').value,
+                isAgotado: document.getElementById('agotado').checked,
                 img: imgVal,
-                lastUpdate: new Date().getTime() // Marca de tiempo opcional
+                lastUpdate: new Date().getTime()
             };
 
             const mensajeExito = editandoID ? "¡Producto actualizado con éxito!" : "¡Producto publicado con éxito!";
-            
             finalizarOperacion(productoObj, mensajeExito);
         });
     }
 
-    // Manejo del botón cancelar (si existe en tu HTML)
-    const btnCancelar = document.getElementById('btnCancelarEdicion');
-    if (btnCancelar) {
-        btnCancelar.addEventListener('click', () => {
-            resetearFormulario();
+    // Buscador de Inventario
+    const inputBusqueda = document.getElementById('busquedaInventario');
+    if (inputBusqueda) {
+        inputBusqueda.addEventListener('input', function(e) {
+            const termino = e.target.value.toLowerCase();
+            document.querySelectorAll('.item-admin').forEach(item => {
+                item.style.display = item.innerText.toLowerCase().includes(termino) ? "flex" : "none";
+            });
         });
     }
 });
 
 /* ============================================================
-   FUNCIONES PRINCIPALES
+   2. FUNCIONES DE FIREBASE
    ============================================================ */
 
-// GUARDAR EN FIREBASE
 function finalizarOperacion(productoObj, mensaje) {
-    const ref = db.ref('productos/' + productoObj.id);
-
-    ref.set(productoObj)
+    db.ref('productos/' + productoObj.id).set(productoObj)
         .then(() => {
             alert(mensaje);
-            // Si veníamos de una URL de edición, limpiamos la URL
             if (window.location.search.includes('edit=')) {
                 window.location.href = "admin.html";
             } else {
@@ -89,13 +80,9 @@ function finalizarOperacion(productoObj, mensaje) {
                 if (typeof switchTab === 'function') switchTab('tab-lista'); 
             }
         })
-        .catch(error => {
-            console.error("Error en Firebase:", error);
-            alert("Error al guardar: " + error.message);
-        });
+        .catch(err => alert("Error: " + err.message));
 }
 
-// LISTAR PRODUCTOS EN EL PANEL
 function actualizarListaControlAdmin() {
     const contenedor = document.getElementById('listaProductosAdmin');
     if (!contenedor) return;
@@ -128,30 +115,24 @@ function actualizarListaControlAdmin() {
     });
 }
 
-// BORRAR PRODUCTO
 window.borrarDesdeAdmin = function(id) {
-    if (confirm("¿Seguro que quieres eliminar este producto de la nube?")) {
+    if (confirm("¿Seguro que quieres eliminar este producto?")) {
         db.ref('productos/' + id).remove()
             .then(() => {
                 if(editandoID === id) resetearFormulario();
                 alert("Eliminado correctamente.");
-            })
-            .catch(err => alert("Error: " + err.message));
+            });
     }
 };
 
-// PREPARAR EDICIÓN (LLENAR FORMULARIO)
 window.prepararEdicion = function(id) {
     db.ref('productos/' + id).once('value').then(snapshot => {
         const p = snapshot.val();
         if (!p) return;
 
         editandoID = id;
-        
-        // Cambiar a la pestaña de formulario si usas el sistema de tabs
         if (typeof switchTab === 'function') switchTab('tab-publicar');
 
-        // Llenar inputs del HTML
         document.getElementById('nombre').value = p.nombre || "";
         document.getElementById('descripcion').value = p.desc || "";
         document.getElementById('precio').value = p.precio || "";
@@ -160,73 +141,34 @@ window.prepararEdicion = function(id) {
         document.getElementById('agotado').checked = p.isAgotado || false;
         
         const vp = document.getElementById('vistaPrevia');
-        if (vp) {
-            vp.src = p.img;
-            vp.style.display = 'block';
-        }
+        if (vp) { vp.src = p.img; vp.style.display = 'block'; }
 
-        // Cambiar Interfaz a modo edición
         actualizarInterfazEdicion(true);
-        
-        // Scroll suave al formulario
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 };
 
-// RESETEAR FORMULARIO (VOLVER A MODO CREAR)
 function resetearFormulario() {
     editandoID = null;
     const form = document.getElementById('formPublicar');
     if (form) form.reset();
-    
     const vp = document.getElementById('vistaPrevia');
-    if (vp) {
-        vp.src = "";
-        vp.style.display = 'none';
-    }
-
+    if (vp) { vp.src = ""; vp.style.display = 'none'; }
     actualizarInterfazEdicion(false);
 }
 
-// CAMBIOS VISUALES SEGÚN MODO
 function actualizarInterfazEdicion(isEdit) {
     const titulo = document.getElementById('tituloForm');
     const btnSubmit = document.getElementById('btnSubmit');
     const btnCancelar = document.getElementById('btnCancelarEdicion');
-    const card = document.getElementById('cardFormulario');
 
     if (isEdit) {
         if (titulo) titulo.innerText = "Editando Producto";
         if (btnSubmit) btnSubmit.innerHTML = '<i class="fas fa-save"></i> Guardar Cambios';
         if (btnCancelar) btnCancelar.style.display = "block";
-        if (card) card.classList.add('edit-mode-active');
     } else {
         if (titulo) titulo.innerText = "Nueva Publicación";
         if (btnSubmit) btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar Producto';
         if (btnCancelar) btnCancelar.style.display = "none";
-        if (card) card.classList.remove('edit-mode-active');
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    // ... tu código anterior ...
-
-    const inputBusqueda = document.getElementById('busquedaInventario');
-    if (inputBusqueda) {
-        inputBusqueda.addEventListener('input', function(e) {
-            const termino = e.target.value.toLowerCase();
-            const items = document.querySelectorAll('.item-admin');
-
-            items.forEach(item => {
-                // Obtenemos el texto del nombre y la categoría/precio que pusiste en el innerHTML
-                const textoContenido = item.innerText.toLowerCase();
-                
-                if (textoContenido.includes(termino)) {
-                    item.style.display = "flex"; // Se muestra
-                } else {
-                    item.style.display = "none"; // Se oculta
-                }
-            });
-        });
-    }
-});
