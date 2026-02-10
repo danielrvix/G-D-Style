@@ -1,0 +1,1560 @@
+/* ==========================================
+   1. RESET Y BASES
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   2. HEADER Y NAVEGACIÓN
+   ========================================== */
+   
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+
+header {
+background: #f8b4b4; /* Un gris oscuro más profundo y elegante */
+    color: rgb(0, 0, 0);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 8%;
+}
+
+.logo {
+    
+    font-size: 26px;
+    color: #f8b4b4;
+    font-family: 'Playfair Display', serif;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #000000 !important;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.logo:hover { transform: translateY(-3px) scale(1.05); }
+.logo a:hover { color: #c95454 !important; }
+
+.nav-links {
+    color: #c95454;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+}
+
+/* Línea decorativa al pasar el mouse */
+.nav-links a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background: #00000094;
+    transition: width .3s;
+}
+
+.nav-links a:hover {
+    color: #ee5252b0; /* El rosa suave que usas en otros botones */
+    opacity: 1;
+}
+
+/* ==========================================
+   3. SECCIÓN HERO (TIENDA)
+   ========================================== */
+.hero-title {
+    /* Degradado de rosado (#f8b4b4) arriba a blanco abajo */
+    background: linear-gradient(to bottom, #f8b4b4 0%, #ffffff 100%);
+    
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 75px; /* Ajuste para que no lo tape el header fijo */
+    border-bottom: 1px solid #eee; /* Un borde sutil para separar de la trust-bar */
+}
+
+/* Ajuste opcional: Si el fondo arriba es rosado, el texto resalta mejor en blanco o gris oscuro */
+.hero-title h1 {
+    color: #2c3136; /* Gris oscuro para buen contraste */
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+}
+
+/* ==========================================
+   4. CONTENEDOR TIENDA Y FILTROS
+   ========================================== */
+.main-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    gap: 50px;
+}
+
+/* ==========================================
+   4. SIDEBAR Y FILTROS (ESTILO G&D)
+   ========================================== */
+.sidebar { 
+    width: 220px; 
+    flex-shrink: 0; 
+}
+
+.sidebar h2 { 
+    font-weight: 300; 
+    font-size: 1.8rem; 
+    margin-bottom: 30px;
+    font-family: 'Playfair Display', serif;
+    color: #2c3136;
+}
+
+/* Contenedor de Búsqueda */
+.search-container { 
+    position: relative; 
+    margin-bottom: 25px; 
+}
+
+.search-container input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid #eee;
+    border-radius: 8px; /* Bordes un poco más redondeados */
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-container input:focus {
+    border-color: #f8b4b4;
+    box-shadow: 0 0 8px rgba(248, 180, 180, 0.2);
+}
+
+.search-container i {
+    position: absolute;
+    left: 15px; 
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    transition: color 0.3s;
+}
+
+.search-container input:focus + i {
+    color: #f8b4b4;
+}
+
+/* Grupos de Filtros */
+.filter-group { 
+    margin-bottom: 30px; 
+}
+
+.price-header { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 10px; 
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Estilizado del Slider de Precio */
+.price-slider { 
+    width: 100%; 
+    cursor: pointer;
+    accent-color: #f8b4b4; /* Color rosa para el control deslizante */
+}
+
+/* Etiquetas de Filtros (Categorías, etc.) */
+.filter-label {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0; 
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem; 
+    cursor: pointer;
+    transition: color 0.3s;
+    color: #444;
+}
+
+.filter-label:hover {
+    color: #f8b4b4;
+}
+
+.filter-label span {
+    font-size: 1.2rem;
+    font-weight: 300;
+    transition: transform 0.3s;
+}
+
+/* Efecto cuando el filtro está abierto (puedes usar una clase .active con JS) */
+.filter-label.active span {
+    transform: rotate(45deg); /* Cambia el + por una x */
+}
+
+/* Opciones dentro del filtro */
+.filter-options {
+    list-style: none;
+    padding: 10px 0;
+}
+
+.filter-options li {
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.filter-options input[type="checkbox"] {
+    accent-color: #f8b4b4;
+    cursor: pointer;
+}
+
+/* ==========================================
+   5. GRILLA DE PRODUCTOS Y TARJETAS
+   ========================================== */
+.products-grid {
+    display: grid;
+    /* Mantiene el tamaño mínimo de 220px para que las fotos luzcan */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+    width: 100%;
+}
+
+.product-card { 
+    text-align: center; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.product-card:hover { 
+    transform: translateY(-8px); /* Elevación un poco más pronunciada */
+}
+
+.img-box {
+    background-color: #f5f5f5; 
+    height: 280px;
+    margin-bottom: 20px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px; /* Un poco más redondeado para suavizar la estética */
+    border: 1px solid rgba(0,0,0,0.03); /* Borde casi invisible para definir la caja */
+    overflow: hidden;
+}
+
+.product-card h4 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    color: #555;
+}
+
+.price { 
+    color: #2c3136; 
+    font-size: 1.1rem; 
+    font-weight: 700;
+    margin-bottom: 15px; 
+    display: block;
+}
+
+.add-btn {
+    border-radius: 5px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    background-color: #2c3136; /* Color oscuro profundo */
+    color: white; 
+    border: none;
+    padding: 14px; 
+    width: 100%;
+    cursor: pointer; 
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.add-btn:hover { 
+    background-color: #f8b4b4; /* Tu rosado insignia */
+    color: #2c3136; 
+    box-shadow: 0 4px 15px rgba(248, 180, 180, 0.4); /* Resplandor rosado al flotar */
+}
+
+/* ==========================================
+   5. VISTA DE DETALLE DE PRODUCTO (OPTIMIZADO)
+   ========================================== */
+.product-detail-container {
+    display: flex;
+    max-width: 1100px;
+    margin: 120px auto 60px;
+    gap: 60px;
+    padding: 0 20px;
+    align-items: flex-start;
+}
+
+.product-gallery { flex: 1; position: sticky; top: 100px; }
+
+.img-box-detail {
+    background-color: #f5f5f5;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 12px; /* Un poco más curvo para suavizar */
+    cursor: zoom-in;
+    transition: opacity 0.2s ease-in-out, transform 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.img-box-detail:hover { transform: scale(1.01); }
+
+/* Fila de Miniaturas */
+.thumbnail-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+    overflow-x: auto;
+    padding: 5px 2px 10px;
+    scrollbar-width: thin; /* Para navegadores modernos */
+}
+
+.thumb {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0; /* Evita que se aplasten */
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.thumb:hover { opacity: 1; transform: translateY(-3px); }
+
+.thumb.active-thumb {
+    border-color: #f8b4b4;
+    opacity: 1;
+    box-shadow: 0 4px 12px rgba(248, 180, 180, 0.3);
+}
+
+/* Información del Producto */
+.product-info-aside { flex: 1; }
+
+.breadcrumb { 
+    font-size: 0.75rem; 
+    color: #aaa; 
+    margin-bottom: 15px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+}
+
+.product-info-aside h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    color: #2c3136;
+}
+
+.price-detail { 
+    font-size: 2.2rem; 
+    margin: 25px 0; 
+    color: #2c3136; 
+    font-weight: 700; 
+}
+
+/* Control de Cantidad y Botón */
+.purchase-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.qty-input {
+    width: 70px; 
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    outline-color: #f8b4b4;
+}
+
+.add-btn-large {
+    background-color: #2c3136;
+    color: white; 
+    border: none;
+    padding: 18px 30px; 
+    flex-grow: 1;
+    cursor: pointer; 
+    font-weight: bold;
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    border-radius: 5px;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-btn-large:hover { 
+    background-color: #f8b4b4; 
+    color: #2c3136; 
+    box-shadow: 0 8px 20px rgba(248, 180, 180, 0.4);
+}
+
+/* Adaptación para Celulares */
+@media (max-width: 768px) {
+    .product-detail-container {
+        flex-direction: column;
+        margin-top: 90px;
+        gap: 30px;
+    }
+    .product-gallery { position: relative; top: 0; }
+    .product-info-aside h1 { font-size: 2rem; }
+    .purchase-actions { flex-direction: column; }
+    .qty-input { width: 100%; }
+}
+
+/* ==========================================
+   6. CARRITO CON CAÍDA ROSADA
+   ========================================== */
+.cart-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none; 
+    justify-content: flex-end;
+    z-index: 10000;
+    backdrop-filter: blur(4px); /* Suaviza el fondo */
+}
+
+.cart-panel {
+    width: 380px;
+    background: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 25px;
+    /* EFECTO: El rosado cae de arriba hacia abajo */
+    background: linear-gradient(to bottom, #f8b4b4 0%, #ffffff 100%);
+    color: #2c3136; /* Texto oscuro para que se lea sobre el rosado claro */
+    border-bottom: 1px solid #eee;
+}
+
+.cart-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.close-cart {
+    cursor: pointer; 
+    background: #2c3136; /* Círculo oscuro para que resalte */
+    border: none;
+    color: white; 
+    width: 32px; height: 32px;
+    border-radius: 50%; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    transition: 0.3s;
+}
+
+.close-cart:hover {
+    transform: rotate(90deg);
+    background: #000;
+}
+
+.cart-content { 
+    flex-grow: 1; 
+    overflow-y: auto; 
+    padding: 20px; 
+}
+
+.cart-footer { 
+    padding: 25px; 
+    background: #ffffff; 
+    border-top: 1px solid #eee; 
+}
+
+.checkout-btn {
+    /* Botón oscuro sólido para contrastar con la caída rosada de arriba */
+    background: #2c3136; 
+    color: #f8b4b4; 
+    border: none;
+    padding: 18px; 
+    width: 100%; 
+    cursor: pointer;
+    font-weight: bold; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.checkout-btn:hover {
+    background: #f8b4b4;
+    color: #2c3136;
+    box-shadow: 0 5px 15px rgba(248, 180, 180, 0.4);
+}
+
+/* ==========================================
+   7. LIGHTBOX (MODAL DE IMAGEN)
+   ========================================== */
+/* ==========================================
+   7. MODAL DE IMAGEN (ZOOM)
+   ========================================== */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 20000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.85); /* Un poco más suave */
+    backdrop-filter: blur(8px); 
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: zoom-out; /* Indica que al hacer clic fuera se cierra */
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 80%;
+    object-fit: contain; /* Asegura que la imagen no se deforme */
+    border-radius: 8px; /* Un poco más redondeado para seguir tu estilo */
+    box-shadow: 0 0 50px rgba(0,0,0,0.6);
+    animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación con rebote suave */
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px; 
+    right: 35px;
+    color: #fff; 
+    font-size: 50px; /* Un poco más grande para facilitar el toque en móvil */
+    font-weight: 300; 
+    cursor: pointer;
+    transition: 0.3s;
+    user-select: none;
+}
+
+.close-modal:hover { 
+    color: #f8b4b4; 
+    transform: scale(1.1);
+}
+
+#caption {
+    margin-top: 20px; 
+    color: #ffffff; /* Texto blanco para mejor lectura */
+    background: rgba(248, 180, 180, 0.2); /* Fondo rosado muy suave y transparente */
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 2px; 
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .close-modal {
+        top: 10px;
+        right: 20px;
+        font-size: 40px;
+    }
+    .modal-content {
+        max-width: 95%;
+    }
+}
+
+/* ==========================================
+   8. BOTONES FLOTANTES Y BADGES
+   ========================================== */
+.cart-floating-btn, .chat-bubble, .back-to-top {
+    position: fixed;
+    width: 55px; height: 55px;
+    border-radius: 8px;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; z-index: 999; transition: 0.3s;
+}
+
+.cart-floating-btn { bottom: 85px; right: 20px; background: #343a40; color: white; }
+.chat-bubble { bottom: 20px; right: 20px; background: #25D366; color: white; font-size: 1.8rem;}
+.back-to-top { bottom: 20px; left: 20px; background: #343a40; color: white; border-radius: 50%; display: none; }
+
+.cart-count {
+    position: absolute; top: -10px; right: -10px;
+    background: #ff4d4d; color: white; font-size: 0.75rem;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    border: 2px solid white;
+}
+
+/* Contenedor necesario para que la etiqueta se quede dentro de la foto */
+.img-container {
+    position: relative; /* Obligatorio para posicionar el badge */
+    width: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+/* Estilo base de la etiqueta */
+.badge {
+    position: absolute;
+    top: 15px;      /* Distancia desde arriba */
+    left: 15px;     /* Distancia desde la izquierda */
+    z-index: 50;    /* Valor alto para estar siempre arriba */
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Sombra para resaltar */
+    pointer-events: none; /* No interfiere con los clics en el producto */
+}
+
+/* Variación: NUEVO (Rosa distintivo de G&D Style) */
+.badge.new {
+    background-color: #f8b4b4;
+    color: #343a40;
+}
+
+/* Variación: AGOTADO (Gris oscuro/Negro) */
+.badge.out-of-stock {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+/* Efecto visual: Si está agotado, la imagen se ve un poco opaca */
+.product-card.out-of-stock .img-box {
+    filter: grayscale(80%);
+    opacity: 0.7;
+}
+
+/* ==========================================
+   9. FOOTER
+   ========================================== */
+/* ==========================================
+   9. FOOTER FINAL G&D STYLE
+   ========================================== */
+footer { 
+    background: linear-gradient(to bottom, #ffffff 0%, #fff5f5 100%);
+    color: #666; 
+    padding: 60px 8% 30px; 
+    margin-top: 80px;
+    border-top: 1px solid rgba(248, 180, 180, 0.3);
+}
+
+.footer-content { 
+    display: flex; 
+    justify-content: space-between; /* Separa los textos a los lados */
+    align-items: flex-start;
+    flex-wrap: wrap; 
+    gap: 30px; 
+}
+
+.footer-section h4 { 
+    color: #000000; 
+    margin-bottom: 15px; 
+    font-family: 'Playfair Display', serif; 
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+}
+
+.footer-section p {
+    font-size: 0.9rem;
+    max-width: 350px;
+    line-height: 1.5;
+}
+
+/* Iconos de Redes Sociales Estilizados */
+.social-icons { 
+    display: flex; 
+    gap: 15px; 
+    justify-content: flex-end; /* Alinea los iconos a la derecha bajo "Síguenos" */
+}
+
+.icon-link { 
+    color: #000000; 
+    background: white; 
+    width: 42px; 
+    height: 42px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 1.3rem; 
+    transition: 0.3s ease; 
+    border: 1px solid #f8b4b4; /* Círculo con borde fino rosado */
+}
+
+.icon-link:hover { 
+    background: #f8b4b4; 
+    color: white; 
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(248, 180, 180, 0.3);
+}
+
+.footer-bottom {
+    text-align: center; 
+    padding-top: 25px; 
+    margin-top: 40px;
+    border-top: 1px solid #eee; /* Línea gris muy clara y fina */
+    font-size: 0.75rem; 
+    color: #000000;
+    letter-spacing: 1px;
+}
+
+.footer-bottom {
+    text-align: center; padding-top: 30px; margin-top: 40px;
+    border-top: 1px solid #4e545a; font-size: 0.75rem; opacity: 0.5;
+}
+
+
+/* ==========================================
+   CSS EXCLUSIVO: ENLACES DEL FOOTER
+   ========================================== */
+
+/* Contenedor de la lista */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Espaciado entre elementos de la lista */
+.footer-section li {
+    margin-bottom: 12px;
+}
+
+/* Estilo base de los enlaces */
+.footer-section li a {
+    color: #555555; /* Gris suave para no competir con el blanco/rosa */
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+/* Efecto Hover (al pasar el mouse) */
+.footer-section li a:hover {
+    color: #f8b4b4; /* Tu rosado insignia */
+    transform: translateX(8px); /* Desplazamiento suave a la derecha */
+}
+
+/* Línea decorativa que aparece al hacer hover */
+.footer-section li a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background-color: #f8b4b4;
+    transition: width 0.3s ease;
+}
+
+.footer-section li a:hover::before {
+    width: 100%; /* La línea se expande de izquierda a derecha */
+}
+
+/* Estilo para los iconos opcionales al lado del texto */
+.footer-section li a i {
+    margin-right: 8px;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.footer-section li a:hover i {
+    color: #f8b4b4;
+    opacity: 1;
+}
+
+/* Ajuste para enlaces en dispositivos táctiles */
+@media (max-width: 768px) {
+    .footer-section li a {
+        padding: 8px 0; /* Área de clic más grande para móviles */
+        font-size: 1rem;
+    }
+    
+    .footer-section li a:hover {
+        transform: none; /* Quitamos el desplazamiento en móvil para evitar saltos */
+    }
+}
+
+/* Controles en el lateral derecho para liberar el centro */
+.zoom-controls {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column; /* Botones uno sobre otro */
+    gap: 20px;
+    z-index: 20001;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(248, 180, 180, 0.3);
+}
+
+/* --- MEJORAS DE USABILIDAD --- */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Animación de "Burbuja" para el contador del carrito */
+.cart-count.bump {
+    animation: bump 0.3s ease-out;
+}
+
+@keyframes bump {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+/* --- CONTROLES DEL LIGHTBOX --- */
+/* Estilo de los botones de zoom para que no sean tan oscuros */
+.zoom-controls {
+    background: rgba(44, 49, 54, 0.8); /* Gris azulado profundo en lugar de negro puro */
+    border: 1px solid rgba(248, 180, 180, 0.5);
+    /* Manteniendo el estilo píldora que definiste */
+    border-radius: 50px; 
+}
+
+.zoom-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zoom-btn:hover {
+    color: #f8b4b4;
+    transform: scale(1.2);
+}
+
+/* Scrollbar personalizado para el carrito */
+.cart-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Ajuste de color para el botón de filtros móvil */
+.filter-mobile-btn {
+    display: none;
+    width: 90%;
+    margin: 15px auto;
+    padding: 12px;
+    background: #f8b4b4; /* Cambiado de gris a tu rosa insignia */
+    color: #2c3136; /* Texto oscuro para contraste */
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(248, 180, 180, 0.3);
+}
+
+/* El botón de cerrar sidebar también en rosado */
+.close-sidebar {
+    display: none;
+    font-size: 2.5rem;
+    background: none;
+    border: none;
+    color: #f8b4b4; /* Rosa para que destaque */
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.cart-content::-webkit-scrollbar-thumb {
+    background: #f8b4b4;
+    border-radius: 10px;
+}
+.modal-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: grab; /* Indica que se puede mover */
+}
+
+.modal-wrapper:active { cursor: grabbing; }
+
+.modal-content {
+    transition: transform 0.1s ease-out; /* Más rápido para que el arrastre sea fluido */
+    max-width: 80%;
+    max-height: 80%;
+    user-select: none;
+}
+
+/* ==========================================
+   ANIMACIONES Y MEJORAS DE NAVEGACIÓN
+   ========================================== */
+
+/* 1. Overlay para el Sidebar móvil */
+.sidebar-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(2px);
+    z-index: 10001;
+    display: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* 2. Ajuste del Sidebar Móvil */
+@media (max-width: 768px) {
+    .sidebar {
+        padding: 40px 25px;
+        overflow-y: auto;
+    }
+    
+    /* Botón de cierre dentro del sidebar */
+    .close-sidebar {
+        display: block !important;
+        color: #f8b4b4;
+        font-size: 2rem;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+    }
+}
+
+/* 3. Refuerzo de la animación Stagger para más productos */
+/* Añadimos un par más por si tu grilla crece */
+.product-card:nth-child(7) { animation-delay: 0.4s; }
+.product-card:nth-child(8) { animation-delay: 0.45s; }
+
+/* 4. Transición suave para el cambio de imagen al hacer hover */
+.img-box {
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                box-shadow 0.4s ease;
+}
+
+/* 5. Feedback visual al presionar el botón de agregar */
+.add-btn:active {
+    transform: scale(0.95);
+    background-color: #2c3136;
+    color: #fff;
+}
+
+/* ==========================================
+   10. DETALLES DE CONFIANZA Y NAVEGACIÓN
+   ========================================== */
+
+/* Barra de confianza con fondo sutil */
+.trust-bar {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px 8%;
+    /* Un toque de rosado casi imperceptible para dar calidez */
+    background: linear-gradient(to bottom, #ffffff, #fffafa); 
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    gap: 20px;
+}
+
+.trust-item {
+    transition: transform 0.3s ease;
+}
+
+.trust-item:hover {
+    transform: translateY(-5px);
+}
+
+.trust-item i {
+    font-size: 1.8rem; /* Un poco más grande para destacar */
+    color: #f8b4b4;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.trust-item h5 {
+    font-size: 0.9rem;
+    color: #2c3136;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.trust-item p {
+    font-size: 0.75rem;
+    color: #999;
+    line-height: 1.4;
+}
+
+/* Introducción de la tienda */
+.shop-intro {
+    max-width: 700px;
+    margin: 60px auto 40px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.shop-intro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #2c3136;
+    margin-bottom: 15px;
+}
+
+.shop-intro p {
+    color: #777;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* Mejora del botón de acción en el carrito */
+.cart-content button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 4px;
+}
+
+.cart-content button:hover {
+    background-color: #2c3136 !important; /* Usamos tu gris oscuro insignia */
+    color: #ffffff !important;
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* El Modal de Pantalla Completa */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 20000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 85%;
+    object-fit: contain;
+    border-radius: 4px;
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+/* ==========================================
+   11. RESPONSIVO
+   ========================================== */
+.menu-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; z-index: 10001; }
+
+@media (max-width: 768px) {
+    .product-detail-container {
+        flex-direction: column; /* Pone la foto arriba y el texto abajo */
+        margin-top: 90px;      /* Espacio para que el header no la tape */
+        padding: 0 15px;
+        gap: 20px;
+    }
+    .product-gallery {
+        width: 100%;
+    }
+    .img-box-detail {
+        min-height: 300px; /* Altura ideal para pantallas de celular */
+        aspect-ratio: 1 / 1; /* Mantiene el cuadro perfecto */
+    }
+    .trust-bar { flex-direction: column; gap: 20px; }
+    .menu-toggle { display: block; }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 75px; left: 0; width: 100%;
+        background: #f8b4b4; padding: 20px;
+        border-bottom: 2px solid #f8b4b4;
+    }
+    .nav-links.active { display: flex; }
+    .main-container { flex-direction: column; }
+    .sidebar { width: 100%; }
+    .product-detail-container { flex-direction: column; margin-top: 90px; }
+    .cart-panel { width: 100%; }
+    .img-box-detail { aspect-ratio: 1/1; }
+        .filter-mobile-btn { display: block; }
+    .sidebar {
+                position: fixed;
+        left: -100%; /* Oculto */
+        top: 0;
+        width: 85%;
+        max-width: 320px;
+        height: 100%;
+        background: white;
+        z-index: 10001;
+        transition: 0.4s ease;
+        padding: 60px 25px;
+        box-shadow: 10px 0 20px rgba(0,0,0,0.2);
+        overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.61); /* Blanco con 85% de opacidad */
+    backdrop-filter: blur(10px); /* Esto crea el efecto de vidrio esmerilado */
+    -webkit-backdrop-filter: blur(10px); /* Compatibilidad para Safari */
+    border-right: 1px solid rgba(0, 0, 0, 0.3); /* Un borde sutil */
+    
+}
+
+/* Si quieres que los filtros de Aroma y Color también se vean integrados */
+.filter-section {
+    background: rgba(252, 1, 1, 0.03); /* Un fondo muy suave para separar secciones */
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+    
+
+    .sidebar.active { left: 0; }
+    .close-sidebar { display: block; }
+    /* Ajuste del Logo para que no choque con el botón de menú */
+    .logo {
+        font-size: 20px;
+    }
+    
+    /* Espaciado del título hero en móvil */
+    .hero-title h1 {
+        font-size: 1.5rem;
+        letter-spacing: 4px;
+    }
+
+    /* Overlay para el sidebar (Opcional, requiere añadir un div en HTML) */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 10000;
+        display: none;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    /* Centrar el botón de filtro */
+    .filter-mobile-btn {
+        position: sticky;
+        top: 85px; /* Se queda pegado al bajar si quieres */
+        z-index: 900;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .cart-panel {
+        width: 100%;
+    }
+    
+    .cart-header h2 {
+        font-size: 1.2rem;
+    }
+    .product-card {
+    /* ... tus estilos actuales ... */
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+}
+/* Ajuste para celulares pequeños */
+@media (max-width: 480px) {
+
+    .card-header {
+        padding: 6px !important;
+    }
+    
+    .card-header strong {
+        font-size: 0.7rem !important;
+    }
+
+    .card-header img {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    .products-grid {
+        display: grid;
+        /* Esto crea las dos columnas iguales */
+        grid-template-columns: repeat(2, 1fr); 
+        /* Reducimos el espacio entre tarjetas para ganar espacio */
+        gap: 12px; 
+        padding: 10px;
+    }
+
+    .product-card {
+        margin-bottom: 0px !important; /* Quitamos el margen inferior para que el grid controle el espacio */
+    }
+
+    /* Ajustamos la altura de la imagen para que no se vea estirada */
+    .product-card div[style*="background-image"] {
+        height: 180px !important; 
+    }
+
+    /* Hacemos los textos un poco más pequeños para que quepan bien */
+    .product-card h4 {
+        font-size: 0.8rem !important;
+        margin-bottom: 5px !important;
+    }
+
+    .item-price {
+        font-size: 1rem !important;
+    }
+
+    /* Ajuste del botón para que no ocupe tanto espacio vertical */
+    .add-btn {
+        padding: 8px !important;
+        font-size: 0.75rem !important;
+    }
+}
+.brand-img {
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.img-box {
+    width: 100%;
+    background-color: #f0f0f0; /* Fondo gris suave por si la imagen tarda en cargar */
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .img-box {
+    transform: scale(1.05); /* Efecto de zoom suave al pasar el mouse */
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background: #f8b4b4; /* Tu color rosa */
+    color: white;
+}
+
+.admin-grid {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+
+}
+
+/* CONTENEDOR PRINCIPAL DE PRODUCTOS */
+#productsGrid {
+    display: grid;
+    /* Esto crea columnas automáticas que se ajustan al tamaño de la pantalla */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+    gap: 20px;
+    padding: 20px;
+}
+
+/* TARJETA DEL PRODUCTO */
+.product-card {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border: 1px solid #eee;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* CONTENEDOR DE LA IMAGEN (Para controlar el tamaño) */
+.product-img-container {
+    width: 100%;
+    height: 220px; /* AQUÍ AJUSTAS EL TAMAÑO: 220px es ideal */
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #f9f9f9;
+}
+
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto evita que la imagen se estire feo */
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img {
+    transform: scale(1.1); /* Efecto de zoom al pasar el mouse */
+}
+
+/* INFORMACIÓN DEL PRODUCTO */
+.product-info {
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.product-category {
+    font-size: 0.75rem;
+    color: #f8b4b4; /* Tu color rosa */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.product-title {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    font-weight: 600;
+    /* Limita el título a 2 líneas para que todo se vea alineado */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.4rem; 
+}
+
+/* PRECIOS */
+.product-price-row {
+    margin: 10px 0;
+}
+
+.current-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2c3136;
+}
+
+.old-price {
+    font-size: 0.9rem;
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 8px;
+}
+
+/* BOTÓN DE AGREGAR */
+.add-to-cart-btn {
+    background-color: #f8b4b4;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #f49a9a;
+}
+
+.add-to-cart-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* BADGES (OFERTA / AGOTADO) */
+.badge-oferta, .badge-agotado {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.badge-oferta { background: #ff9800; color: white; }
+.badge-agotado { background: #333; color: white; }
+
+
+/* Barra superior de la tarjeta para controles de Admin */
+.admin-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-card-header .shop-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.admin-card-header .shop-logo-mini {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #2c3136; /* Color oscuro de tu marca */
+}
+
+/* Contenedor de botones redondo */
+.admin-btn-group {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-admin-action {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: white;
+    transition: 0.2s;
+}
+
+.btn-admin-edit { background-color: #007bff; }
+.btn-admin-delete { background-color: #ff4d4d; }
+
+.btn-admin-action:hover { opacity: 0.8; transform: scale(1.1); }
+
+.shop-logo-mini {
+    width: 25px;
+    height: 25px;
+    background-image: url('TU_LOGO_AQUÍ.png'); /* Reemplaza con la ruta de tu logo */
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 1px solid #eee;
+}
+.btn-logout-mini {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-left: 5px;
+}
+
+.btn-logout-mini:hover {
+    background: #ff4d4d;
+    color: white;
+}
