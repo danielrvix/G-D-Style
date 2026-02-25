@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sorteo G&D Style - Registro</title>
         <link rel="icon" type="image/png" href="img/logo.jpeg">
+    <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -49,6 +50,7 @@
     </style>
 </head>
 <body>
+    
 
     <div class="card">
         <div class="img-container" onclick="openModal()">
@@ -91,7 +93,6 @@
         <img class="modal-content" id="imgFull">
     </div>
 
-    <footer>&copy; 2026 G&D STYLE</footer>
 
     <script>
         function openModal() {
@@ -129,4 +130,33 @@
     </script>
 
 </body>
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>G&D Style</h4>
+            <p>Belleza y estilo a tu alcance. Calidad garantizada en cada accesorio.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/584121927683" target="_blank" class="icon-link wa"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; padding: 10px;">
+        <div id="admin-tools-footer" style="display:none; background:#222; color:white; padding:15px; text-align:center; border-top: 2px solid #ff4d4d; margin-top: 10px; border-radius: 8px;">
+            <p style="margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 1px;">🛠️ MODO ADMINISTRADOR ACTIVO</p>
+            <a href="admin.html" style="text-decoration:none; background:#007bff; color:white; padding:8px 15px; border-radius:5px; cursor:pointer; font-size: 0.8rem; margin: 5px; display: inline-block; font-weight: bold;">
+                <i class="fas fa-plus-circle"></i> Gestionar Inventario
+            </a>
+            <button onclick="logoutAdmin()" style="background:#ff4d4d; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-size: 0.8rem; margin: 5px; font-weight: bold;">
+                <i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN
+            </button>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 G&D Style - Todos los derechos reservados</div>
+</footer>
 </html>
