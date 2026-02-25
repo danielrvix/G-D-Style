@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sorteo G&D Style - Registro</title>
-        <link rel="icon" type="image/png" href="img/logo.jpeg">
+    <link rel="icon" type="image/png" href="img/logo.jpeg">
     <link rel="stylesheet" href="style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root { --rosa: #f8b4b4; --rosa-fuerte: #f09494; --oscuro: #333; --verde-wa: #25d366; }
         body { font-family: 'Roboto', sans-serif; background-color: #fff5f5; margin: 0; padding: 20px; color: var(--oscuro); text-align: center; }
         
-        .card { max-width: 500px; margin: 0 auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card { max-width: 500px; margin: 0 auto 40px auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         
         .img-container { position: relative; cursor: zoom-in; overflow: hidden; height: 280px; }
         .product-img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
@@ -22,35 +21,34 @@
 
         .content { padding: 25px; }
         h1 { font-family: 'Playfair Display', serif; margin: 0 0 10px; color: var(--oscuro); }
-        .description { font-size: 0.95rem; color: #666; margin-bottom: 20px; line-height: 1.4; }
         
+        /* Botones de Pasos Previos */
+        .btn-social-step { display: block; text-decoration: none; color: white; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-weight: bold; font-size: 0.9rem; transition: 0.3s; }
+        .bg-insta { background: #e1306c; }
+        .bg-canal { background: #007bff; }
+        .bg-grupo { background: #128c7e; }
+        .btn-social-step:hover { opacity: 0.8; transform: scale(1.02); }
+
         .steps-box { background: #fef0f0; padding: 15px; border-radius: 12px; text-align: left; margin-bottom: 25px; border: 1px dashed var(--rosa-fuerte); }
         .steps-box h3 { margin-top: 0; font-size: 0.9rem; color: var(--rosa-fuerte); text-transform: uppercase; }
-        .step { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.85rem; }
-        .step i { margin-right: 10px; color: var(--rosa-fuerte); width: 18px; }
         
         .form-group { margin-bottom: 15px; text-align: left; }
         label { display: block; font-size: 0.75rem; font-weight: bold; margin-bottom: 5px; color: #555; text-transform: uppercase; }
-        input { 
-            width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 10px; box-sizing: border-box; font-size: 1rem; outline: none; 
-        }
+        input { width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 10px; box-sizing: border-box; font-size: 1rem; outline: none; }
 
-        .btn-verify { 
-            background: var(--verde-wa); color: white; border: none; padding: 16px; width: 100%; 
-            font-size: 1.1rem; font-weight: bold; border-radius: 10px; cursor: pointer; 
-            display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s;
-        }
-        .btn-verify:hover { background: #128c7e; }
+        .btn-verify { background: var(--verde-wa); color: white; border: none; padding: 16px; width: 100%; font-size: 1.1rem; font-weight: bold; border-radius: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; }
+        .btn-verify:hover { background: #1ebe57; transform: translateY(-2px); }
 
         .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
         .modal-content { max-width: 90%; max-height: 80%; border-radius: 10px; }
         .close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
 
-        footer { margin-top: 30px; font-size: 0.7rem; color: #bbb; letter-spacing: 1px; }
+        footer { background: #fff; padding: 30px 20px; border-top: 1px solid #eee; }
+        .footer-content { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        .social-icons a { font-size: 1.5rem; margin: 0 10px; color: var(--rosa-fuerte); }
     </style>
 </head>
 <body>
-    
 
     <div class="card">
         <div class="img-container" onclick="openModal()">
@@ -60,13 +58,26 @@
         
         <div class="content">
             <h1>¡Sorteo G&D Style! ✨</h1>
-            <p class="description">Participa por nuestro Kit de Cuidado Facial Premium.</p>
+            <p class="description">Sigue los 3 pasos y llena tus datos para ganar.</p>
 
             <div class="steps-box">
-                <h3>Pasos Obligatorios:</h3>
-                <div class="step"><i class="fas fa-plus-circle"></i> Agregar a alguien al grupo de WhatsApp.</div>
-                <div class="step"><i class="fas fa-bullhorn"></i> Seguir el canal de WhatsApp.</div>
-                <div class="step"><i class="fab fa-instagram"></i> Seguir nuestra cuenta de Instagram.</div>
+                <h3>Cumple los pasos aquí:</h3>
+                
+                <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="btn-social-step bg-insta">
+                    <i class="fab fa-instagram"></i> 1. Seguir en Instagram
+                </a>
+                
+                <a href="https://whatsapp.com/channel/0029VbCGUDPIXnltjpk4zu3t" target="_blank" class="btn-social-step bg-canal">
+                    <i class="fas fa-bullhorn"></i> 2. Seguir Canal de WhatsApp
+                </a>
+
+                <a href="https://chat.whatsapp.com/Jq9EAavSu9063sDvKquXyN" target="_blank" class="btn-social-step bg-grupo">
+                    <i class="fas fa-users"></i> 3. Unirse al Grupo de WhatsApp y Agregar una Persona mas
+                </a>
+
+                <p style="font-size: 0.7rem; color: #777; margin-top: 10px; text-align: center;">
+                    * Toma captura de cada paso para enviarlas al final.
+                </p>
             </div>
 
             <div class="form-group">
@@ -79,11 +90,11 @@
             </div>
 
             <button class="btn-verify" onclick="enviarWhatsApp()">
-                <i class="fab fa-whatsapp"></i> PARTICIPAR AHORA
+                <i class="fab fa-whatsapp"></i> REGISTRAR Y ENVIAR CAPTURAS
             </button>
             
             <p style="font-size: 0.7rem; color: #888; margin-top: 10px;">
-                *Al enviar, adjunta tus 3 capturas en el chat.
+                * Se abrirá el chat para que adjuntes tus capturas.
             </p>
         </div>
     </div>
@@ -93,6 +104,24 @@
         <img class="modal-content" id="imgFull">
     </div>
 
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>G&D Style</h4>
+                <p>Tu belleza, nuestra prioridad.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/gyd_style.7/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/584264744951" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px; font-size: 0.8rem; color: #999;">
+            &copy; 2026 G&D Style - San Fernando de Apure
+        </div>
+    </footer>
 
     <script>
         function openModal() {
@@ -112,51 +141,19 @@
             const numero = "584264744951";
 
             if(!nombre || !id) {
-                alert("Por favor rellena los datos");
+                alert("Por favor, ingresa tu nombre y cédula.");
                 return;
             }
 
-            // Mensaje ultra simplificado para evitar errores de envío
-            const texto = "Hola G&D Style! Quiero participar en el sorteo.\n\n" +
+            const texto = "¡Hola G&D Style! ✨\n\n" +
+                          "Vengo de la web para el sorteo.\n" +
                           "Nombre: " + nombre + "\n" +
-                          "Cedula: " + id + "\n\n" +
-                          "Aqui adjunto las 3 capturas solicitadas.";
+                          "Cédula: " + id + "\n\n" +
+                          "Ya cumplí los 3 pasos (IG, Canal y Grupo). Aquí te envío mis capturas.";
 
-            // Usamos encodeURIComponent para que los espacios y saltos de línea funcionen bien
             const url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(texto);
-            
             window.open(url, '_blank');
         }
     </script>
-
 </body>
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>G&D Style</h4>
-            <p>Belleza y estilo a tu alcance. Calidad garantizada en cada accesorio.</p>
-        </div>
-
-        <div class="footer-section">
-            <h4>Síguenos</h4>
-            <div class="social-icons">
-                <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/584121927683" target="_blank" class="icon-link wa"><i class="fab fa-whatsapp"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <div style="text-align: center; padding: 10px;">
-        <div id="admin-tools-footer" style="display:none; background:#222; color:white; padding:15px; text-align:center; border-top: 2px solid #ff4d4d; margin-top: 10px; border-radius: 8px;">
-            <p style="margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 1px;">🛠️ MODO ADMINISTRADOR ACTIVO</p>
-            <a href="admin.html" style="text-decoration:none; background:#007bff; color:white; padding:8px 15px; border-radius:5px; cursor:pointer; font-size: 0.8rem; margin: 5px; display: inline-block; font-weight: bold;">
-                <i class="fas fa-plus-circle"></i> Gestionar Inventario
-            </a>
-            <button onclick="logoutAdmin()" style="background:#ff4d4d; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-size: 0.8rem; margin: 5px; font-weight: bold;">
-                <i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN
-            </button>
-        </div>
-    </div>
-    <div class="footer-bottom">&copy; 2026 G&D Style - Todos los derechos reservados</div>
-</footer>
 </html>
