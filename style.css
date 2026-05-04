@@ -1812,3 +1812,72 @@ body.no-scroll {
 .wa:hover { color: #25D366; }
 .ig:hover { color: #E1306C; }
 .fb:hover { color: #1877F2; }
+
+/* --- ESTILOS DE AUTENTICACIÓN Y ADMIN --- */
+
+
+.btn-nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border: 1px solid #f8b4b4;
+    color: #f8b4b4;
+    background: rgba(248, 180, 180, 0.05);
+    white-space: nowrap; /* Evita que el texto se rompa en dos líneas */
+}
+
+
+/* Resaltado especial para Daniel o Genesis */
+.btn-nav-auth.admin-highlight {
+    background: #2c3136;
+    color: #f8b4b4;
+    border-color: #f8b4b4;
+    box-shadow: 0 0 10px rgba(248, 180, 180, 0.2);
+}
+
+.btn-logout-icon {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+    padding: 3px;
+    right: 10px;
+}
+
+/* Reset de carrito en el panel */
+.btn-reset-cart {
+    width: 100%;
+    background: none;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+
+/* Ajuste para móviles pequeños */
+@media (max-width: 400px) {
+    .btn-nav-auth {
+        padding: 4px 8px;
+        font-size: 0.65rem;
+    }
+    .auth-container {
+        gap: 4px;
+    }
+}
