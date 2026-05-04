@@ -14,7 +14,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "https://danielrvix.github.io/G-D-Style/catalogo.html",
   "background_color": "#fffafa",
   "display": "standalone",
   "scope": "/",
