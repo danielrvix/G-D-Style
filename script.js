@@ -52,30 +52,35 @@ const adminTools = document.getElementById('admin-tools');
     const isAdmin = localStorage.getItem('gd_admin_session') === 'true';
     const isUser = localStorage.getItem('gd_user_session') === 'true';
 
-    if (isAdmin) {
-        // Interfaz para Daniel o Gene
-        adminTools.innerHTML = `
-            <div style="display:flex; align-items:center; gap:8px;">
-                <a href="admin.html" class="btn-nav-auth admin-highlight">
-                    <i class="fas fa-tools"></i> PANEL ADMIN
-                </a>
-                <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </div>`;
-    } else if (isUser) {
-        // Interfaz para Clientes registrados
-        adminTools.innerHTML = `
-            <div style="display:flex; align-items:center; gap:8px;">
-                <a href="perfil.html" class="btn-nav-auth user"><i class="fas fa-user-circle"></i> PERFIL</a>
-                <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </div>`;
-    } else {
-        // Usuario no identificado
-        adminTools.innerHTML = `<a href="login.html" class="btn-nav-auth"><i class="fas fa-lock"></i> ENTRAR</a>`;
-    }
+if (isAdmin) {
+    // Interfaz para Daniel o Genesis
+    adminTools.innerHTML = `
+        <div class="auth-container">
+            <a href="admin.html" class="btn-nav-auth admin-highlight">
+                <i class="fas fa-tools"></i> ADMIN
+            </a>
+            <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>`;
+} else if (isUser) {
+    // Interfaz para Clientes registrados
+    adminTools.innerHTML = `
+        <div class="auth-container">
+            <a href="perfil.html" class="btn-nav-auth user">
+                <i class="fas fa-user-circle"></i> PERFIL
+            </a>
+            <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>`;
+} else {
+    // Usuario no identificado
+    adminTools.innerHTML = `
+        <a href="login.html" class="btn-nav-auth">
+            <i class="fas fa-lock"></i> ENTRAR
+        </a>`;
+}
 
         // Inyección de Estilos Dinámicos
         if (!document.getElementById('nav-auth-styles')) {
