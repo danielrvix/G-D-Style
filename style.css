@@ -1814,8 +1814,35 @@ body.no-scroll {
 .fb:hover { color: #1877F2; }
 
 /* --- ESTILOS DE AUTENTICACIÓN Y ADMIN --- */
+.auth-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0; /* Esto mata cualquier punto o texto fantasma */
+}
+/* Seleccionamos el contenedor donde inyectas los botones */
+#adminTools, .nav-bottom {
+    font-size: 0; /* Esto elimina cualquier espacio o punto de texto entre elementos */
+    letter-spacing: 0;
+    word-spacing: 0;
+}
 
+/* Le devolvemos el tamaño de fuente solo a los elementos que sí deben tener texto */
+.nav-item, .btn-nav-auth, .admin-highlight {
+    font-size: 0.75rem !important; /* Ajusta según el tamaño que desees */
+    display: inline-flex;
+    align-items: center;
+}
 
+/* Limpieza específica para el icono del documento que se ve en la captura */
+.fa-file-alt, .fa-file {
+    position: relative;
+}
+
+/* Por si acaso hay un pseudo-elemento rebelde */
+.nav-bottom *::before, .nav-bottom *::after {
+    text-decoration: none !important;
+}
 .btn-nav-auth {
     display: flex;
     align-items: center;
@@ -1833,6 +1860,10 @@ body.no-scroll {
     white-space: nowrap; /* Evita que el texto se rompa en dos líneas */
 }
 
+.btn-nav-auth:hover {
+    background: #f8b4b4;
+    color: #1a1a1a;
+}
 
 /* Resaltado especial para Daniel o Genesis */
 .btn-nav-auth.admin-highlight {
@@ -1851,10 +1882,17 @@ body.no-scroll {
     display: flex;
     align-items: center;
     transition: 0.3s;
-    padding: 3px;
-    right: 10px;
+    padding: 5px;
 }
 
+.btn-logout-icon:hover {
+    transform: scale(1.2);
+    color: #ff1a1a;
+}
+
+.btn-nav-auth, .btn-logout-icon {
+    font-size: 0.75rem; /* Le devolvemos el tamaño real a los elementos internos */
+}
 /* Reset de carrito en el panel */
 .btn-reset-cart {
     width: 100%;
@@ -1870,6 +1908,10 @@ body.no-scroll {
     transition: 0.3s;
 }
 
+.btn-reset-cart:hover {
+    background: #ff4d4d;
+    color: white;
+}
 
 /* Ajuste para móviles pequeños */
 @media (max-width: 400px) {
