@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo G&D Style - Registro</title>
+    <link rel="icon" type="image/png" href="img/logoo.jpeg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --rosa: #f8b4b4; --rosa-fuerte: #f09494; --oscuro: #2d2d2d; --verde-wa: #25d366; --oro: #d4af37; }
+        body { font-family: 'Poppins', sans-serif; background-color: #fffafa; margin: 0; padding: 20px; color: var(--oscuro); text-align: center; }
+        
+        .card { max-width: 500px; margin: 0 auto 40px auto; background: white; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid rgba(248, 180, 180, 0.3); }
+        
+        .img-container { position: relative; cursor: zoom-in; overflow: hidden; height: 320px; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .img-container:hover .product-img { transform: scale(1.1); }
+        .img-hint { position: absolute; bottom: 15px; right: 15px; background: rgba(255,255,255,0.9); color: var(--rosa-fuerte); padding: 7px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        .content { padding: 30px 25px; }
+        h1 { font-family: 'Playfair Display', serif; margin: 0; color: var(--oscuro); font-size: 2.2rem; font-style: italic; }
+        .subtitle { color: var(--rosa-fuerte); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; font-weight: 600; }
+        
+        .description { font-size: 0.95rem; color: #666; margin-bottom: 25px; line-height: 1.6; font-weight: 300; }
+        .highlight { color: var(--rosa-fuerte); font-weight: 600; }
+
+        /* Botones de Pasos */
+        .steps-box { background: #fffcfc; padding: 20px; border-radius: 20px; text-align: left; margin-bottom: 25px; border: 1px solid #f9ecec; }
+        .steps-box h3 { margin-top: 0; font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; text-align: center; }
+        
+        .btn-social-step { display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none; color: white; padding: 12px; border-radius: 12px; margin-bottom: 12px; font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
+        .bg-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .bg-canal { background: #0088cc; }
+        .bg-grupo { background: #075e54; }
+        .btn-social-step:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-size: 0.7rem; font-weight: 600; margin-bottom: 8px; color: #999; text-transform: uppercase; padding-left: 5px; }
+        input { width: 100%; padding: 14px; border: 1px solid #f0f0f0; border-radius: 15px; box-sizing: border-box; font-size: 1rem; outline: none; background: #fdfdfd; transition: 0.3s; font-family: 'Poppins', sans-serif; }
+        input:focus { border-color: var(--rosa); background: white; box-shadow: 0 0 0 4px rgba(248, 180, 180, 0.1); }
+
+        .btn-verify { background: var(--verde-wa); color: white; border: none; padding: 18px; width: 100%; font-size: 1.1rem; font-weight: 600; border-radius: 15px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px; transition: 0.4s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
+        .btn-verify:hover { background: #1ebe57; transform: scale(1.02); }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); justify-content: center; align-items: center; }
+        .modal-content { max-width: 90%; max-height: 80%; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .close-modal { position: absolute; top: 25px; right: 35px; color: var(--oscuro); font-size: 40px; cursor: pointer; }
+
+        footer { background: #fff; padding: 40px 20px; border-top: 1px solid #f5f5f5; }
+        .footer-content h4 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 10px; }
+        .social-icons a { font-size: 1.4rem; margin: 0 15px; color: var(--rosa-fuerte); transition: 0.3s; }
+        .social-icons a:hover { color: var(--oscuro); }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="img-container" onclick="openModal()">
+            <img src="img/sorteo.jpeg" alt="Kit de Sorteo Premium" class="product-img" id="imgSrc">
+            <div class="img-hint"><i class="fas fa-expand-alt"></i> VER PREMIOS</div>
+        </div>
+        
+        <div class="content">
+            <span class="subtitle">Evento Especial</span>
+            <h1>G&D Style Giveaway</h1>
+            
+            <p class="description">
+                Queremos premiar tu fidelidad con un <span class="highlight">Kit de Autocuidado Premium</span>. 
+                Diseñado para resaltar tu belleza natural y brindarte un momento de relax único. 
+                <br><br>
+                Cumple los 3 pasos a continuación y asegura tu participación. ¡El próximo ganador podrías ser tú! ✨
+            </p>
+
+            <div class="steps-box">
+                <h3>Pasos para Participar</h3>
+                
+                <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="btn-social-step bg-insta">
+                    <i class="fab fa-instagram"></i> Seguir en Instagram
+                </a>
+                
+                <a href="https://whatsapp.com/channel/0029VbCGUDPIXnltjpk4zu3t" target="_blank" class="btn-social-step bg-canal">
+                    <i class="fas fa-bullhorn"></i> Unirse al Canal
+                </a>
+
+                <a href="https://chat.whatsapp.com/Jq9EAavSu9063sDvKquXyN" target="_blank" class="btn-social-step bg-grupo">
+                    <i class="fas fa-users"></i> Entrar al Grupo Oficial
+                </a>
+            </div>
+
+            <div class="form-group">
+                <label>Tu Nombre Completo</label>
+                <input type="text" id="nombreCompleto" placeholder="Ej. Valentina Rodríguez">
+            </div>
+            <div class="form-group">
+                <label>Documento de Identidad</label>
+                <input type="number" id="cedula" placeholder="Número de cédula">
+            </div>
+
+            <button class="btn-verify" onclick="enviarWhatsApp()">
+                <i class="fab fa-whatsapp"></i> REGISTRAR MI PARTICIPACIÓN
+            </button>
+            
+            <p style="font-size: 0.7rem; color: #aaa; margin-top: 15px; font-style: italic;">
+                * Se abrirá WhatsApp para recibir tus capturas de confirmación.
+            </p>
+        </div>
+    </div>
+
+    <div id="imgModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="imgFull">
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <h4>G&D Style</h4>
+            <p style="font-size: 0.9rem; color: #888; max-width: 300px; margin: 0 auto 20px;">Donde la elegancia y el estilo se encuentran.</p>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/gyd_style.7/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/584264744951" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div style="margin-top: 30px; font-size: 0.75rem; color: #bbb; letter-spacing: 1px;">
+            &copy; 2026 G&D STYLE - SAN FERNANDO DE APURE
+        </div>
+    </footer>
+
+    <script>
+        function openModal() {
+            const modal = document.getElementById("imgModal");
+            const modalImg = document.getElementById("imgFull");
+            modal.style.display = "flex";
+            modalImg.src = document.getElementById("imgSrc").src;
+        }
+
+        function closeModal() {
+            document.getElementById("imgModal").style.display = "none";
+        }
+
+        function enviarWhatsApp() {
+            const nombre = document.getElementById('nombreCompleto').value.trim();
+            const id = document.getElementById('cedula').value.trim();
+            const numero = "584264744951";
+
+            if(!nombre || !id) {
+                alert("Por favor, completa tus datos para participar.");
+                return;
+            }
+
+            const texto = "¡Hola G&D Style! ✨\n\n" +
+                          "Deseo registrarme en el sorteo desde la web.\n\n" +
+                          "🌟 Nombre: " + nombre + "\n" +
+                          "🆔 Cédula: " + id + "\n\n" +
+                          "He completado los 3 pasos. A continuación envío mis capturas de pantalla.";
+
+            const url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(texto);
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>

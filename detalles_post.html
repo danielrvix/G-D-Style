@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Publicación - G&D Style</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/logoo.jpeg">
+    <style>
+        .post-detail-wrapper { max-width: 800px; margin: 80px auto; padding: 20px; }
+        .post-full-img { width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .post-avatar { width: 50px; height: 50px; border-radius: 50%; background: #2c3136; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .post-content-text { font-size: 1.1rem; line-height: 1.8; color: #333; white-space: pre-wrap; margin-bottom: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .btn-heart-detail { background: #fff1f1; border: 1px solid #ffcccc; color: #ff4d4d; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .btn-heart-detail.active { background: #ff4d4d; color: white; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">G&D<span> STYLE</span></div>
+        <a href="index.html"  class="btn-back"><i class="fas fa-chevron-left"></i> Volver</a>
+    </header>
+
+    <main class="post-detail-wrapper" id="post-root">
+        <div style="text-align: center; padding: 100px;">
+            <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: #f8b4b4;"></i>
+        </div>
+    </main>
+
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "gyd-style.firebaseapp.com",
+            databaseURL: "https://gyd-style-default-rtdb.firebaseio.com",
+            projectId: "gyd-style",
+            storageBucket: "gyd-style.appspot.com",
+            messagingSenderId: "TU_ID",
+            appId: "TU_APP_ID"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const postId = params.get('id_post');
+            
+            if (postId) {
+                cargarPost(postId);
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        function cargarPost(id) {
+            const root = document.getElementById('post-root');
+            db.ref('publicaciones/' + id).on('value', (snapshot) => {
+                const post = snapshot.val();
+                if (!post) {
+                    root.innerHTML = "<h2>Publicación no encontrada</h2>";
+                    return;
+                }
+
+                const fecha = new Date(post.fecha).toLocaleDateString();
+                const yaTieneLike = localStorage.getItem(`like_${id}`) === 'true';
+
+                root.innerHTML = `
+<div class="post-meta">
+        <!-- CAMBIA ESTO: Ponemos la imagen de tu logo -->
+        <img src="img/logoo.jpeg" alt="Logo G&D" style="width:50px; height:50px; border-radius:50%; object-fit:cover;">
+        
+        <div>
+            <strong style="display:block;">G&D Style Store</strong>
+            <small style="color:#888;">${fecha}</small>
+        </div>
+    </div>
+
+                    ${post.img ? `<img src="${post.img}" class="post-full-img">` : ''}
+
+                    <div class="post-content-text">
+                        ${post.texto || ''}
+                    </div>
+
+                    <div style="display:flex; gap:15px; align-items:center;">
+                        <button id="btnLike" onclick="darLike('${id}')" class="btn-heart-detail ${yaTieneLike ? 'active' : ''}">
+                            <i class="${yaTieneLike ? 'fas' : 'far'} fa-heart"></i> 
+                            <span id="count">${post.likes || 0}</span> Me gusta
+                        </button>
+                        <button class="btn-back" style="border:1px solid #ddd;" onclick="compartir()">
+                            <i class="fas fa-share-alt"></i> Compartir
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        window.darLike = function(id) {
+            if (localStorage.getItem(`like_${id}`) === 'true') return;
+
+            db.ref(`publicaciones/${id}/likes`).transaction(c => (c || 0) + 1);
+            localStorage.setItem(`like_${id}`, 'true');
+            document.getElementById('btnLike').classList.add('active');
+        };
+
+        function compartir() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'G&D Style Store',
+                    text: 'Mira esta publicación en G&D Style',
+                    url: window.location.href
+                });
+            } else {
+                alert("Enlace copiado: " + window.location.href);
+            }
+        }
+    </script>
+</body>
+</html>
