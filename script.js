@@ -78,7 +78,7 @@ if (isAdmin) {
     // Usuario no identificado
     adminTools.innerHTML = `
         <a href="login.html" class="btn-nav-auth">
-            <i class="fas fa-lock"></i> ENTRAR
+            <i class="fas fa-lock"></i>Iniciar Sesión
         </a>`;
 }
 
@@ -214,7 +214,7 @@ window.verificarAcceso = function() {
         <button onclick="logoutUniversal()" class="btn-logout-icon" title="Cerrar Sesión"><i class="fas fa-sign-out-alt"></i></button>
     </div>`;
         } else {
-            adminTools.innerHTML = `<button onclick="loginAdmin()" class="btn-nav-auth"><i class="fas fa-lock"></i> ENTRAR</button>`;
+            adminTools.innerHTML = `<button onclick="loginAdmin()" class="btn-nav-auth"><i class="fas fa-lock"></i>Iniciar Sesión</button>`;
         }
     }
 };
@@ -565,4 +565,36 @@ window.toggleFilter = function(id) {
 
 function goBack() {
     window.history.back();
+}
+// --- CONFIGURACIÓN DEL MENÚ HAMBURGUESA ---
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
+
+if (hamburger && navMenu) {
+    // 1. Abrir/Cerrar con el botón
+    hamburger.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita que el clic se propague al documento inmediatamente
+        navMenu.classList.toggle('active');
+        hamburger.classList.toggle('open');
+    });
+
+    // 2. CERRAR AL DAR CLIC AFUERA
+    document.addEventListener('click', (event) => {
+        const isClickInsideMenu = navMenu.contains(event.target);
+        const isClickOnHamburger = hamburger.contains(event.target);
+
+        // Si el menú está abierto y el clic NO fue adentro ni en el botón...
+        if (navMenu.classList.contains('active') && !isClickInsideMenu && !isClickOnHamburger) {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('open');
+        }
+    });
+
+    // 3. Cerrar al tocar un enlace interno
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('open');
+        });
+    });
 }
