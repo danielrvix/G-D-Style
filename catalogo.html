@@ -12,21 +12,43 @@
     <meta name="theme-color" content="#f8b4b4">
 </head>
 <body>
+<nav class="nav-bottom">
+    <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Inicio</span></a>
+    <a href="catalogo.html" class="nav-item active"><i class="fas fa-store"></i><span>Tienda</span></a>
+    <a href="contacto.html" class="nav-item"><i class="fas fa-envelope"></i><span>Contacto</span></a>
+    <!-- Aquí se inyectará el botón de Admin automáticamente solo si inicias sesión -->
+    <div id="admin-tools"></div> 
+</nav>
+   <!-- Botón Hamburguesa -->
+<button class="hamburger" id="hamburger">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
 
+<!-- Menú de Navegación Lateral -->
+<nav class="nav-menu" id="nav-menu">
+    <div class="nav-menu-header">Menú</div> <!-- Opcional: un título arriba -->
+    
+    <a href="faq.html" class="nav-sidebar-item">
+        <i class="fas fa-question-circle"></i>
+        <span>Preguntas Frecuentes</span>
+    </a>
+    
+    <a href="politicas.html" class="nav-sidebar-item">
+        <i class="fas fa-file-alt"></i>
+        <span>Políticas Legales</span>
+    </a>
+    
+    <a href="acerca.html" class="nav-sidebar-item">
+        <i class="fas fa-info-circle"></i>
+        <span>Sobre Nosotros</span>
+    </a>
+</nav>
 <header>
      <div class="logo">G&D<span> STYLE</span></div>
      <button onclick="goBack()" class="btn-back"><i class="fas fa-chevron-left"></i> Volver</button>
 </header>
-
-    <nav class="nav-bottom">
-         <a href="index.html" class="nav-item"><i class="fas fa-home"></i></a>
-        <a href="catalogo.html" class="nav-item active"><i class="fas fa-store"></i>Tienda</a>
-        <a href="acerca.html" class="nav-item"><i class="fas fa-info-circle"></i></a>
-        <a href="contacto.html" class="nav-item"><i class="fas fa-envelope"></i></a>
-        <a href="faq.html" class="nav-item"><i class="fas fa-question-circle"></i></a>
-        <a href="politicas.html" class="nav-item"><i class="fas fa-file-alt"></i></a>
-        <li id="admin-tools"></li>
-    </nav>
 
 <button class="filter-mobile-btn" id="openFilters">
     <i class="fas fa-filter"></i> Buscar Productos
@@ -39,16 +61,7 @@
             <input type="text" id="productSearch" placeholder="Buscar producto...">
             <i class="fas fa-search"></i>
         </div>
-        
-        <h2>Filtrar por</h2>
-        
-        <div class="filter-group">
-            <div class="price-header"><span>Precio Máximo</span></div>
-            <input type="range" class="price-slider" id="priceRange" min="0" max="100" value="100">
-            <div class="price-labels">
-                <span id="currentMaxLabel">$ 100</span>
-            </div>
-        </div>
+    
 
 <div class="filter-group">
     <div class="filter-label" onclick="toggleFilter('aroma-opts')">
