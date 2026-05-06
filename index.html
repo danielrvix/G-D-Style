@@ -12,16 +12,50 @@
     <meta name="theme-color" content="#f8b4b4">
 </head>
 <body>
-
-    <header>
+    <!-- Capa oscura que detecta el toque afuera -->
+<div id="menu-overlay" class="menu-overlay"></div>
+<nav class="nav-bottom">
+    <a href="index.html" class="nav-item active"><i class="fas fa-home"></i><span>Inicio</span></a>
+    <a href="catalogo.html" class="nav-item"><i class="fas fa-store"></i><span>Tienda</span></a>
+    <a href="contacto.html" class="nav-item"><i class="fas fa-envelope"></i><span>Contacto</span></a>
+    <!-- Aquí se inyectará el botón de Admin automáticamente solo si inicias sesión -->
+    <div id="admin-tools"></div> 
+</nav>
+ <header>
         <div class="logo">G&D<span> STYLE</span></div>
-    </header>
+ </header>
 
     <!-- Contenedor del saludo -->
     <div id="userWelcome" class="user-greeting">
         <i class="fas fa-sparkles"></i> Bienvenid@, <span id="userNameDisplay"></span>
     </div>
     <h1 class="tituloo">Categorias Mas Buscadas</h1>
+    <!-- Botón Hamburguesa -->
+<button class="hamburger" id="hamburger">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<!-- Menú de Navegación Lateral -->
+<nav class="nav-menu" id="nav-menu">
+    <div class="nav-menu-header">Menú</div> <!-- Opcional: un título arriba -->
+    
+    <a href="faq.html" class="nav-sidebar-item">
+        <i class="fas fa-question-circle"></i>
+        <span>Preguntas Frecuentes</span>
+    </a>
+    
+    <a href="politicas.html" class="nav-sidebar-item">
+        <i class="fas fa-file-alt"></i>
+        <span>Políticas Legales</span>
+    </a>
+    
+    <a href="acerca.html" class="nav-sidebar-item">
+        <i class="fas fa-info-circle"></i>
+        <span>Sobre Nosotros</span>
+    </a>
+</nav>
 
 <div class="stories-container">
     <!-- CUIDADO FACIAL -->
@@ -125,16 +159,6 @@
     </div>
 
 </div>
-    <nav class="nav-bottom">
-         <a href="index.html" class="nav-item active"><i class="fas fa-home"></i>Inicio</a>
-        <a href="catalogo.html" class="nav-item"><i class="fas fa-store"></i></a>
-        <a href="acerca.html" class="nav-item"><i class="fas fa-info-circle"></i></a>
-        <a href="contacto.html" class="nav-item"><i class="fas fa-envelope"></i></a>
-        <a href="faq.html" class="nav-item"><i class="fas fa-question-circle"></i></a>
-        <a href="politicas.html" class="nav-item"><i class="fas fa-file-alt"></i></a>
-        <li id="admin-tools"></li>
-    </nav>
-
     <!-- FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -322,8 +346,12 @@ function cargarCarrusel() {
     });
 }
 
+
+
 // Llamada inmediata y al cargar
 window.addEventListener('load', cargarCarrusel);
+
+
     </script>
 </body>
 <footer>
