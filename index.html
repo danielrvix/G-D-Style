@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>G&D Style Ocifial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="img/logoo.jpeg">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f8b4b4">
+</head>
+<body>
+    <!-- Capa oscura que detecta el toque afuera -->
+<div id="menu-overlay" class="menu-overlay"></div>
+<nav class="nav-bottom">
+    <a href="index.html" class="nav-item active"><i class="fas fa-home"></i><span>Inicio</span></a>
+    <a href="catalogo.html" class="nav-item"><i class="fas fa-store"></i><span>Tienda</span></a>
+    <a href="contacto.html" class="nav-item"><i class="fas fa-envelope"></i><span>Contacto</span></a>
+    <!-- Aquí se inyectará el botón de Admin automáticamente solo si inicias sesión -->
+    <div id="admin-tools"></div> 
+</nav>
+ <header>
+        <div class="logo">G&D<span> STYLE</span></div>
+ </header>
+
+    <!-- Contenedor del saludo -->
+    <div id="userWelcome" class="user-greeting">
+        <i class="fas fa-sparkles"></i> Bienvenid@, <span id="userNameDisplay"></span>
+    </div>
+    <h1 class="tituloo">Categorias Mas Buscadas</h1>
+    <!-- Botón Hamburguesa -->
+<button class="hamburger" id="hamburger">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<!-- Menú de Navegación Lateral -->
+<nav class="nav-menu" id="nav-menu">
+    <div class="nav-menu-header">Menú</div> <!-- Opcional: un título arriba -->
+    
+    <a href="faq.html" class="nav-sidebar-item">
+        <i class="fas fa-question-circle"></i>
+        <span>Preguntas Frecuentes</span>
+    </a>
+    
+    <a href="politicas.html" class="nav-sidebar-item">
+        <i class="fas fa-file-alt"></i>
+        <span>Políticas Legales</span>
+    </a>
+    
+    <a href="acerca.html" class="nav-sidebar-item">
+        <i class="fas fa-info-circle"></i>
+        <span>Sobre Nosotros</span>
+    </a>
+</nav>
+
+<div class="stories-container">
+    <!-- CUIDADO FACIAL -->
+    <div class="story" onclick="location.href='catalogo.html?categoria=mascarillas'">
+        <div class="story-img">🎭</div><span>Mascarillas</span>
+    </div>
+    <div class="story" onclick="location.href='catalogo.html?categoria=cremas'">
+        <div class="story-img">✨</div><span>Cremas</span>
+    </div>
+    <div class="story" onclick="location.href='catalogo.html?categoria=serums'">
+        <div class="story-img">💧</div><span>Serums</span>
+    </div>
+
+    <!-- MAQUILLAJE -->
+    <div class="story" onclick="location.href='catalogo.html?categoria=labiales'">
+        <div class="story-img">💄</div><span>Labiales</span>
+    </div>
+    <div class="story" onclick="location.href='catalogo.html?categoria=bases-polvos'">
+        <div class="story-img">🎨</div><span>Bases</span>
+    </div>
+
+    <!-- CUIDADO PERSONAL -->
+    <div class="story" onclick="location.href='catalogo.html?categoria=lociones-body'">
+        <div class="story-img">🌬️</div><span>Splash</span>
+    </div>
+    <div class="story" onclick="location.href='catalogo.html?categoria=cabello'">
+        <div class="story-img">💇‍♀️</div><span>Cabello</span>
+    </div>
+
+    <!-- ACCESORIOS / OFERTAS -->
+    <div class="story" onclick="location.href='catalogo.html?categoria=brochas-esponjas'">
+        <div class="story-img">🖌️</div><span>Brochas</span>
+    </div>
+    <div class="story" onclick="location.href='catalogo.html?categoria=ofertas'">
+        <div class="story-img" style="border-color: #ff4d4d;">🔥</div><span>Ofertas</span>
+    </div>
+</div>
+    <section class="hero-title">
+</section>
+
+    <div class="section-header">
+        <h2>Novedades</h2>
+    </div>
+
+    <div class="carousel-container" id="novedadesSlider">
+        <!-- Productos dinámicos -->
+    </div>
+            <div class="view-more-container">
+    <a href="catalogo.html" class="btn-view-more">
+        Ver más productos <i class="fas fa-arrow-right"></i>
+    </a>
+    <h1 id="publiinf">Publicaciones Mas Recientes</h1>
+<section id="muro-social" style="background: #f0f2f5; padding: 20px 0;">
+    <div id="muroAdmin" class="container">
+        <!-- Los posts aparecerán aquí mágicamente -->
+    </div>
+</section>
+<div class="fb-post-card">
+    <!-- Cabecera: Foto de perfil y nombre -->
+    <div class="fb-header">
+        <img src="img/logoo.jpeg" alt="G&D Style" class="profile-pic">
+        <div class="header-text">
+            <span class="profile-name">G&D Style</span>
+            <span class="post-time">03/05/2026 · <i class="fas fa-globe-americas"></i></span>
+        </div>
+    </div>
+
+    <!-- Contenido de la publicación -->
+    <div class="fb-content">
+        <p>¡Nuevos ingresos en la tienda! 🛍️ No te pierdas nuestras últimas tendencias. Calidad y estilo en un solo lugar.</p>
+        <img src="img/logoo.jpeg" alt="Imagen del producto" class="post-image">
+    </div>
+
+    <!-- Botones de interacción -->
+    <div class="fb-footer">
+        <a href="https://chat.whatsapp.com/Jq9EAavSu9063sDvKquXyN?mode=gi_t" class="fb-btn wa">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://www.instagram.com/gyd_style.7/" class="fb-btn ig">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61569208231552" class="fb-btn fb">
+            <i class="fab fa-facebook"></i> Facebook
+        </a>
+    </div>
+</div>
+
+<div class="fb-post-card">
+    <!-- Cabecera: Foto de perfil y nombre -->
+    <div class="fb-header">
+        <img src="img/logoo.jpeg" alt="G&D Style" class="profile-pic">
+        <div class="header-text">
+            <span class="profile-name">G&D Style</span>
+            <span class="post-time">03/05/2026 · <i class="fas fa-globe-americas"></i></span>
+        </div>
+    </div>
+
+    <!-- Contenido de la publicación -->
+    <div class="fb-content">
+        <p>¡¡El accesorio que estabas buscando ya llegó a G&D Style! ✨.</p>
+        <p>Porque sabemos que los detalles marcan la diferencia, traemos para ti nuestra nueva colección de temporada. Calidad garantizada para que luzcas increíble en cada ocasión. 💖</p>
+        <p>📍 Envíos en San Fernando de Apure.</p>
+        <p>🛍️ ¡Pocas unidades disponibles! No te quedes sin el tuyo."</p>
+        <img src="img/gyd.jpeg" alt="Imagen del producto" class="post-image">
+    </div>
+
+</div>
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+  // 1. CONFIGURACIÓN EXACTA DE TU LOGIN
+    const firebaseConfig = {
+        apiKey: "AIzaSyCJ9_6Dg2lf2MLJTat6ygergU5OHCNh7mI",
+        authDomain: "gyd-style.firebaseapp.com",
+        databaseURL: "https://gyd-style-default-rtdb.firebaseio.com",
+        projectId: "gyd-style",
+        storageBucket: "gyd-style.firebasestorage.app", // Actualizado según tu login
+        messagingSenderId: "154759089927",
+        appId: "1:154759089927:web:54d27c640301436a713fa2",
+        measurementId: "G-JV50RMY5WM"
+    };
+    
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const auth = firebase.auth();
+
+    // --- LÓGICA DE SESIÓN Y BIENVENIDA ---
+    auth.onAuthStateChanged((user) => {
+        const welcomeDiv = document.getElementById('userWelcome');
+        const nameSpan = document.getElementById('userNameDisplay');
+        const adminLink = document.getElementById('adminLink');
+
+        if (user) {
+            // Buscamos el nombre real en la base de datos de usuarios
+            db.ref('usuarios/' + user.uid).once('value').then((snapshot) => {
+                const userData = snapshot.val();
+                let nombreAMostrar = "Administrador"; // Valor por defecto para ti
+
+                if (userData && userData.nombre) {
+                    nombreAMostrar = userData.nombre;
+                } else if (user.displayName) {
+                    nombreAMostrar = user.displayName;
+                }
+
+                if (nameSpan) nameSpan.innerText = " " + nombreAMostrar;
+                if (welcomeDiv) welcomeDiv.style.display = 'flex';
+            });
+
+            if (adminLink) {
+                adminLink.href = "admin.html";
+                adminLink.style.color = "var(--rosa)";
+            }
+        } else {
+            if (welcomeDiv) welcomeDiv.style.display = 'none';
+            if (adminLink) adminLink.href = "login.html";
+        }
+    });
+
+function cargarMuro() {
+    const muroDiv = document.getElementById('muroAdmin');
+    if (!muroDiv) return;
+
+    // Traemos las últimas 10 publicaciones, de la más nueva a la más vieja
+    db.ref('publicaciones').orderByChild('fecha').limitToLast(10).on('value', (snapshot) => {
+        const data = snapshot.val();
+        muroDiv.innerHTML = '';
+        if (!data) return;
+
+        // Convertir a array y revertir para que la nueva salga arriba
+Object.entries(data).reverse().forEach(([key, post]) => {
+    const fechaPost = new Date(post.fecha).toLocaleDateString();
+    const yaTieneLike = localStorage.getItem(`like_${key}`) === 'true';
+    
+    const postHTML = `
+<div class="post-card">
+        <div class="post-header">
+            <!-- CAMBIA ESTO: Reemplazamos el div de letras por tu logo real -->
+            <img src="img/logoo.jpeg" alt="Logo G&D" style="width:45px; height:45px; border-radius:50%; object-fit:cover; border: 1px solid #eee;">
+            
+            <div>
+                <strong style="display:block; font-size:0.9rem;">G&D Style Store</strong>
+                <span style="font-size:0.7rem; color:#aaa;">Administrador</span>
+            </div>
+        </div>
+            
+            <!-- Al hacer clic aquí, redirige al nuevo HTML de detalles -->
+            <div class="post-body" onclick="abrirDetallePost('${key}')" style="cursor:pointer;">
+                ${post.texto ? `<p class="post-texto">${post.texto}</p>` : ''}
+                ${post.img ? `<img src="${post.img}" class="post-img-full">` : ''}
+            </div>
+            
+            <div class="post-footer" style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <button id="btn-like-${key}" 
+                            onclick="gestionarLike('${key}')" 
+                            style="background:none; border:none; cursor:pointer; font-size:1.2rem; color: ${yaTieneLike ? '#ff4d4d' : '#ccc'}; transition: 0.3s;">
+                        <i class="${yaTieneLike ? 'fas' : 'far'} fa-heart"></i>
+                    </button>
+                    <span id="like-count-${key}" style="font-size:0.9rem; font-weight:bold; color:#555;">
+                        ${post.likes || 0}
+                    </span>
+                </div>
+                <span style="font-size:0.75rem; color:#999;">Publicado el ${fechaPost}</span>
+            </div>
+        </div>
+    `;
+    muroDiv.insertAdjacentHTML('beforeend', postHTML);
+});
+    });
+}
+
+function abrirDetallePost(key) {
+    // Redirige al nuevo archivo pasando el ID por la URL
+    window.location.href = `detalles_post.html?id_post=${key}`;
+}
+
+function gestionarLike(postId) {
+    const storageKey = `like_${postId}`;
+    const yaTieneLike = localStorage.getItem(storageKey) === 'true';
+    const btn = document.getElementById(`btn-like-${postId}`);
+    const countSpan = document.getElementById(`like-count-${postId}`);
+
+    if (yaTieneLike) {
+        alert("¡Ya le diste amor a esta publicación! ❤️");
+        return;
+    }
+
+    // 1. Actualizar Firebase
+    db.ref(`publicaciones/${postId}/likes`).transaction((currentLikes) => {
+        return (currentLikes || 0) + 1;
+    });
+
+    // 2. Guardar en el navegador del usuario
+    localStorage.setItem(storageKey, 'true');
+
+    // 3. Efecto visual inmediato
+    btn.style.color = '#ff4d4d';
+    btn.innerHTML = `<i class="fas fa-heart"></i>`;
+    countSpan.innerText = parseInt(countSpan.innerText) + 1;
+    
+    // Animación de pulso
+    btn.style.transform = 'scale(1.4)';
+    setTimeout(() => btn.style.transform = 'scale(1)', 200);
+}
+
+
+// Llamar la función al cargar la página
+window.addEventListener('load', cargarMuro);
+
+// --- 2. CARGAR PRODUCTOS ALEATORIOS ---
+function cargarCarrusel() {
+    const slider = document.getElementById('novedadesSlider');
+    if (!slider) return;
+
+    db.ref('productos').once('value').then((snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        // Mezclar productos aleatoriamente
+        let productos = Object.entries(data).map(([id, info]) => ({ id, ...info }));
+        productos.sort(() => Math.random() - 0.5);
+
+        slider.innerHTML = '';
+
+        // Tomar los primeros 5
+        productos.slice(0, 5).forEach(p => {
+            const precioActual = parseFloat(p.precio) || 0;
+            const precioViejo = parseFloat(p.precioOferta) || 0;
+            const tieneOferta = precioViejo > precioActual;
+
+            const card = `
+                <div class="product-card">
+                    <div class="img-wrapper">
+                        ${tieneOferta ? '<span class="badge-oferta">OFERTA</span>' : ''}
+                        <img src="${p.img}" class="product-img" onclick="location.href='detalles.html?id=${p.id}'">
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3>${p.nombre}</h3>
+                        <div class="price-container">
+                            ${tieneOferta ? `<span class="old-price">$ ${precioViejo.toFixed(2)}</span>` : ''}
+                            <span class="current-price">$ ${precioActual.toFixed(2)}</span>
+                        </div>
+                        <button class="btn-view" onclick="location.href='detalles.html?id=${p.id}'">VER</button>
+                    </div>
+                </div>`;
+            slider.insertAdjacentHTML('beforeend', card);
+        });
+    });
+}
+
+
+
+// Llamada inmediata y al cargar
+window.addEventListener('load', cargarCarrusel);
+
+
+    </script>
+</body>
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>G&D Style</h4>
+            <p>Belleza y estilo a tu alcance. Calidad garantizada en cada accesorio.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=61569208231552"  target="_blank" class="icon-link fb"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/gyd_style.7/" target="_blank" class="icon-link ig"><i class="fab fa-instagram"></i></a>
+                <a href="https://chat.whatsapp.com/Jq9EAavSu9063sDvKquXyN?mode=gi_t" target="_blank" class="icon-link wa"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; padding: 10px;">
+        <div id="admin-tools-footer" style="display:none; background:#222; color:white; padding:15px; text-align:center; border-top: 2px solid #ff4d4d; margin-top: 10px; border-radius: 8px;">
+            <p style="margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 1px;">🛠️ MODO ADMINISTRADOR ACTIVO</p>
+            <a href="admin.html" style="text-decoration:none; background:#007bff; color:white; padding:8px 15px; border-radius:5px; cursor:pointer; font-size: 0.8rem; margin: 5px; display: inline-block; font-weight: bold;">
+                <i class="fas fa-plus-circle"></i> Gestionar Inventario
+            </a>
+            <button onclick="logoutAdmin()" style="background:#ff4d4d; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-size: 0.8rem; margin: 5px; font-weight: bold;">
+                <i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN
+            </button>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 G&D Style - Todos los derechos reservados</div>
+</footer>
+<script src="script.js"></script>
+</html>
